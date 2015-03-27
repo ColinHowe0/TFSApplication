@@ -1,0 +1,12 @@
+TD for week of 2/17:
+	--Authentication: PIN and saved email?
+		--Application handles verification of PINs
+		--WebService handles verification and authentication
+		--Determine Minimum requirement
+	--Two Databases - Authentication and Part Data
+	--UI Mock Up End User Testing Next Tuesday 2/24
+	--Picture Sending and Receiving - uuencode/uudecode
+	--PHP Web Service - Username/password
+	
+
+
