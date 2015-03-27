@@ -1,9 +1,0 @@
-PRIMARY REQUIREMENTS:
-	Need list of parts as search return???
-	Send email for new part request
-	Picture Importance -- Not very necessary???
-	Manufacturer Part Number - High importance
-	Essentially whatever's in PLEX app should show
-	Fuzzy searches: general text search;
-	Fraction size search; Metric and Imperial
-	Combined search 
