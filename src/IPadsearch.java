@@ -1,4 +1,5 @@
 
+import java.awt.Container;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -13,6 +14,9 @@ import org.apache.solr.client.solrj.SolrServerException;
  * @author Alexandre
  */
 public class IPadsearch extends javax.swing.JFrame {
+    solrj j;
+    IPadresults resultPanel = new IPadresults();
+    Container container;
     String[] fetch = new String[5];
     /**
      * Creates new form IPadsearch
@@ -64,7 +68,105 @@ public class IPadsearch extends javax.swing.JFrame {
 
         PartType.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
             "None",
-            "Connector",}));
+            "Connector"
+            ,"Elbow, 90"
+            ,"Tee, Equal"
+            ,"Tube, Seamless"
+            ,"Elbow, 90 Long Radius"
+            ,"Cap"
+            ,"Adapter"
+            ,"Adapter, Male"
+            ,"Adapter. Female"
+            ,"Coupling"
+            ,"Reducer, Concentric"
+            ,"Elbow, 45"
+            ,"Pipe, Welded"
+            ,"Union Half"
+            ,"Cross"
+            ,"Lateral, 45"
+            ,"Reducer, Eccentric"
+            ,"Tee, Reducing"
+            ,"Flange, Reducing"
+            ,"Reducer, Concentric Short"
+            ,"Flange, Blind"
+            ,"Backing Ring"
+            ,"Pipe, Seamless"
+            ,"Plug, Hex"
+            ,"Reducer, Bushing"
+            ,"Flange, Single part"
+            ,"Elbow, 22.5"
+            ,"Wye"
+            ,"Wye, Reducing"
+            ,"Wye, Reducing Double"
+            ,"Elbow, 90 Short Radius"
+            ,"Flange, Van Stone"
+            ,"Elbow, 30"
+            ,"Elbow 11.5"
+            ,"Flange, Ring"
+            ,"Tee, Extended Leg"
+            ,"Reducer, Concentric Machined Flush"
+            ,"Elbow, 90 Extended Leg"
+            ,"Bend, U"
+            ,"Elbow, 45 Long Radius"
+            ,"Stub End, Pipe"
+            ,"Stub End, Pipe Long"
+            ,"Union,  Reducing"
+            ,"Bulkhead"
+            ,"Union"
+            ,"Gland, Long"
+            ,"Gland, Short"
+            ,"Union, Rotating"
+            ,"Gland"
+            ,"Centering Ring"
+            ,"Flange, Short"
+            ,"Flange, Longneck"
+            ,"Flange, Bored"
+            ,"Flange, Blank"
+            ,"Flange, Blank Stub End"
+            ,"Elbow, 60"
+            ,"Wye, Double"
+            ,"Elbow 15"
+            ,"Strut End Cap, Red"
+            ,"Cap, Allthread Rod"
+            ,"Beam Clamp, Adjustable"
+            ,"Double Strut Channel 10' Length"
+            ,"Strut 45 Corner Angle"
+            ,"Strut Channel 10' Length"
+            ,"Strut L"
+            ,"Strut T"
+            ,"Strut U"
+            ,"Strut Z"
+            ,"Washer, Square"
+            ,"Strut Double Wing"
+            ,"Strut Splice Plate"
+            ,"Strut Cross"
+            ,"Strut Single Wing Left"
+            ,"Strut Single Wing Right"
+            ,"Double Strut Channel 20' Length"
+            ,"Strut Channel 20' Length"
+            ,"Bolt, Hex"
+            ,"Strut Channel Nut"
+            ,"Washer, Fender"
+            ,"Washer, Flat"
+            ,"Carbon Steel, Zinc Plated"
+            ,"Washer, SAE"
+            ,"Rod, Allthread 6' Length"
+            ,"Rod, Allthread 10' Length"
+            ,"Nut, Hex Grade 5"
+            ,"Anchor, Hilti Drop-in"
+            ,"Anchor, Hilti TZ"
+            ,"Double Strut Post Base"
+            ,"Rod Coupling"
+            ,"Carbon Steel, Electrogalvanized"
+            ,"Strut 90 Corner Angle"
+            ,"Strut Beam Clamp (U-Bolt)"
+            ,"Strut Bracket"
+            ,"Strut Cap"
+            ,"Strut Cush-a-Clamp"
+            ,"Clamp, KF (Wingnut)"
+            ,"Clamp, KF (Lever)"
+            ,"Restraint Fitting"
+            ,"Bellows",}));
 PartType.setSelectedIndex(0);
 PartType.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +175,83 @@ PartType.addActionListener(new java.awt.event.ActionListener() {
     });
 
     Size1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-        "None", "1\"","2\"", "3\"", "4\""}));
+        "None"
+        ,"0.25\" (1/4)"
+        ,"0.5\" (1/2)"
+        ,"0.75\" (3/4)"
+        ,"1\""
+        ,"0.375\" (3/8)"
+        ,"1.25\" (1 1/4)"
+        ,"1.5\" (1 1/2)"
+        ,"2\""
+        ,"3\""
+        ,"4\""
+        ,"6\""
+        ,"8\""
+        ,"10\""
+        ,"12\""
+        ,"20 mm"
+        ,"25 mm"
+        ,"32 mm"
+        ,"40 mm"
+        ,"50 mm"
+        ,"63 mm"
+        ,"75 mm"
+        ,"90 mm"
+        ,"110 mm"
+        ,"160 mm"
+        ,"200 mm"
+        ,"250 mm"
+        ,"315 mm"
+        ,"355 mm"
+        ,"400 mm"
+        ,"450 mm"
+        ,"500 mm"
+        ,"2.5\" (2 1/2)"
+        ,"5\""
+        ,"14\""
+        ,"16\""
+        ,"18\""
+        ,"20\""
+        ,"24\""
+        ,"225 mm"
+        ,"3.5\" (3 1/2)"
+        ,"30\""
+        ,"36\""
+        ,"42\""
+        ,"48\""
+        ,"0.125\" (1/8)"
+        ,"0.5\" (1/2)"
+        ,"0.25\" (1/4)"
+        ,"0.75\" (3/4)"
+        ,"1\""
+        ,"0.375\" (3/8)"
+        ,"0.25\" (1/4) (Male)"
+        ,"0.5\" (1/2) (Male)"
+        ,"0.75\" (3/4) (Male)"
+        ,"1\" (Male)"
+        ,"0.25\" (1/4) (Female)"
+        ,"0.5\" (1/2) (Female)"
+        ,"0.75\" (3/4) (Female)"
+        ,"320 mm"
+        ,"4.5\" (4 1/2)"
+        ,"1.625\'"
+        ,"0.8125\" (13/16)\""
+        ,"1.625 (1 5/8)"
+        ,"4 Hole"
+        ,"3 Hole"
+        ,"5 Hole"
+        ,"2 hole"
+        ,"0.5\""
+        ,"3.25\""
+        ,"12\""
+        ,"18\""
+        ,"0.8125 (13/16)"
+        ,"7 Hole"
+        ,"8 Hole"
+        ,"1.25\""
+        ,"1.5\""
+        ,"3\""}));
 Size1.setSelectedIndex(0);
 Size1.addActionListener(new java.awt.event.ActionListener() {
 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +259,6 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     }
     });
 
-    searchBar.setText("connector PFA");
     searchBar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             searchBarActionPerformed(evt);
@@ -117,7 +294,42 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     });
 
     MClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-        "None", "SS", "Carbon Steel"}));
+        "None", "PFA"
+        ,"Polyethylene, 150 lb"
+        ,"Carbon Steel, PTFE Lined 150 lb"
+        ,"Polypropylene, 150 lb"
+        ,"PVC Sch 40 Clear"
+        ,"PVC Sch 80"
+        ,"PVDF HP, PN 16"
+        ,"SS 304L Sch 10"
+        ,"SS 316L Sch 10"
+        ,"SS 316L 10 Ra Max/EP"
+        ,"SS 316L 20 Ra Max/MP"
+        ,"SS 316L Coaxial 10 Ra Max/EP"
+        ,"SS 316 CFOS"
+        ,"SS 316L EP/UHP"
+        ,"SS 316L EP"
+        ,"SS 316L EP/UHP HiFlo"
+        ,"SS 316L EP HiFlo"
+        ,"SS 316L EP/UHP MicroFit"
+        ,"SS 304"
+        ,"FEP"
+        ,"Carbon Steel, PTFE Lined 300 lb"
+        ,"SS 304L 20 Ra Max/MP"
+        ,"PVC Sch 80 Fabricated"
+        ,"SS 304L"
+        ,"PVDF HP, PN 16 Fabricated"
+        ,"Polypropylene, 150 lb Fabricated"
+        ,"Plastic"
+        ,"Carbon Steel, Malleable"
+        ,"Carbon Steel, Green"
+        ,"Carbon Steel, Electrogalvanized"
+        ,"Carbon Steel, Zinc Plated"
+        ,"Washer, Square"
+        ,"HDI SS 303"
+        ,"Stainless Steel"
+        ,"Strut 45 Corner Angle"
+        ,"Carbon Steel, Zinc Plated (Dichromate Finish)"}));
 MClass.setSelectedIndex(0);
 MClass.addActionListener(new java.awt.event.ActionListener() {
 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,9 +364,9 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                             .addComponent(searchButton)
                             .addGap(0, 0, Short.MAX_VALUE))
                         .addComponent(group, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Size1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(MClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PartType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(PartType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Size1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGap(54, 54, 54))
     );
     jPanel2Layout.setVerticalGroup(
@@ -179,9 +391,9 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                 .addComponent(jLabel5)
                 .addComponent(MClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel6)
-                .addComponent(Size1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Size1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(searchButton)
             .addContainerGap(93, Short.MAX_VALUE))
@@ -219,14 +431,16 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         gatherList();
         try {
-            getContentPane().removeAll();
-            solrj j = new solrj(new IPadresults());
+            container = getContentPane();
+            resultPanel.getTextField().setText(searchBar.getText());
+            j = new solrj(resultPanel);
             j.executeQuery(fetch);
-            switchToResultPanel(j);
+            resultPanel.switchToResultPanel(this);
         } catch (SolrServerException ex) {
             Logger.getLogger(IPadsearch.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_searchButtonActionPerformed
+    
     // Gather all the texts from the search bar and drop down.
     private void gatherList(){
         fetch[0] = searchBar.getText();
@@ -249,8 +463,8 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             fetch[3] = "";
         }
         if(Size1.getSelectedIndex() != 0){
-            String inch = Size1.getSelectedItem().toString();
-            fetch[4] = inch.substring(0, inch.length() - 1);
+            String inch = insertBackSlash(Size1.getSelectedItem().toString());
+            fetch[4] = inch;
         }
         else{
             fetch[4] = "";
@@ -268,10 +482,8 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }//GEN-LAST:event_PartTypeActionPerformed
 
-    private void switchToResultPanel(solrj j){
-        IPadresults resultPanel = j.getResultPanel();
-        resultPanel.getTextField().setText(searchBar.getText());
-        getContentPane().add(resultPanel.getPanel());
+    public void switchToSearchPanel(){
+        setContentPane(container);
         getContentPane().repaint();
     }
     /**
@@ -307,6 +519,16 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                 new IPadsearch().setVisible(true);
             }
         });
+    }
+    public String insertBackSlash(String tokenIndex){
+        String newstr = "";
+        for(int i = 0; i < tokenIndex.length(); i++){
+            if(tokenIndex.charAt(i) == '"')
+                newstr += "\\\"~1";
+            else
+                newstr += tokenIndex.charAt(i);
+        }
+        return newstr;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox MClass;

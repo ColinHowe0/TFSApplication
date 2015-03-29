@@ -1,3 +1,4 @@
+import java.awt.Container;
 import java.awt.TextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,7 +14,8 @@ import javax.swing.JTextArea;
  * @author Alexandre
  */
 public class IPadresults extends javax.swing.JFrame {
-
+    Container c;
+    IPadsearch s;
     /**
      * Creates new form IPadresults
      */
@@ -34,8 +36,9 @@ public class IPadresults extends javax.swing.JFrame {
         ResultLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        textField1 = new java.awt.TextField();
+        searchBar = new java.awt.TextField();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,14 +49,20 @@ public class IPadresults extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        textField1.setText("textField1");
-        textField1.addActionListener(new java.awt.event.ActionListener() {
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField1ActionPerformed(evt);
+                searchBarActionPerformed(evt);
             }
         });
 
         jLabel2.setText("You have requested:");
+
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,11 +74,12 @@ public class IPadresults extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -79,12 +89,14 @@ public class IPadresults extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ResultLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,15 +111,22 @@ public class IPadresults extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField1ActionPerformed
+    }//GEN-LAST:event_searchBarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ResultLabel.setText("Result(s): ");
+        jTextArea1.setText("");
+        s.switchToSearchPanel();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,6 +162,11 @@ public class IPadresults extends javax.swing.JFrame {
             }
         });
     }
+    public void switchToResultPanel(IPadsearch s){
+        this.s = s;
+        s.setContentPane(getPanel());
+        s.getContentPane().repaint();
+    }
     public JPanel getPanel(){
         return jPanel1;
     }
@@ -151,7 +175,7 @@ public class IPadresults extends javax.swing.JFrame {
     }
     
     public TextField getTextField(){
-        return textField1;
+        return searchBar;
     }
     public JLabel getResultLabel(){
         return ResultLabel;
@@ -159,10 +183,11 @@ public class IPadresults extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ResultLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private java.awt.TextField textField1;
+    private java.awt.TextField searchBar;
     // End of variables declaration//GEN-END:variables
 }

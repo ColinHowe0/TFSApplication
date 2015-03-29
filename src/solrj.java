@@ -12,7 +12,6 @@ import org.noggit.JSONUtil;
  * @author Alexandre
  */
 public class solrj {
-    private static int count = 0;
     private static IPadresults r;
     private boolean isFirstToken = true;
     public solrj(IPadresults r) throws SolrServerException{
@@ -21,31 +20,31 @@ public class solrj {
     
     // Get the results from querying and send the results to the IPadresults 
     // panel
-    private void sendQueryResponse(SolrServer server, SolrQuery query) throws SolrServerException{
-        QueryResponse response = server.query(query);
-         SolrDocumentList results = response.getResults();
-        // String returnValue = JSONUtil.toJSON(results); //this has the json documents
-         
-         Iterator<SolrDocument> iterator = results.iterator();
-         String result = "";
-        while(iterator.hasNext()){
-            SolrDocument a = iterator.next();
-            result += (String)a.getFieldValue("PName")+ "\n" +
-                    (String)a.getFieldValue("Group") + "\n" +
-                    (String)a.getFieldValue("Class") + "\n" +
-                    (String)a.getFieldValue("Size1") + "\n" +
-                    (String)a.getFieldValue("ET1") + "\n\n";
-            count++;
+    private void sendQueryResponse(SolrServer server, SolrQuery query){
+        try {
+            QueryResponse response = server.query(query);
+             SolrDocumentList results = response.getResults();
+            // String returnValue = JSONUtil.toJSON(results); //this has the json documents
+             
+             Iterator<SolrDocument> iterator = results.iterator();
+             String result = "";
+             int count = 0;
+            while(iterator.hasNext()){
+                SolrDocument a = iterator.next();
+                result += "Part_Name: " +(String)a.getFieldValue("PName")+ "\n" +
+                        "Group: " +(String)a.getFieldValue("Group") + "\n" +
+                        "Material Class " + (String)a.getFieldValue("Class") + "\n" +
+                        "Size1: " + (String)a.getFieldValue("Size1") + "\n" +
+                        "End Type1: " + (String)a.getFieldValue("ET1") + "\n\n";
+                count++;
+            }
+            
+            // Send the results
+            r.getResultLabel().setText(r.getResultLabel().getText() + "" + count);
+            r.getTextArea().setText(result);
+        } catch (SolrServerException ex) {
+            System.out.println("ERROR: Unable to connect to server");
         }
-        
-        // Send the results
-        r.getResultLabel().setText(r.getResultLabel().getText() + "" + count);
-        r.getTextArea().setText(result);
-    }
-    
-    // Return the result panel of IPadresults
-    public IPadresults getResultPanel(){
-        return r;
     }
     public void executeQuery(String[] str) throws SolrServerException{
         String queryStr = "";
@@ -90,11 +89,11 @@ public class solrj {
     }
     private String tokenizeGeneralSearchString(String genStr, String queryStr){
         String[] token = genStr.split("[ ]+");
-        token = insertBackSlash(token);
+        token = modifyString(token);
         isFirstToken = true;
-        for(int i = 0; i < token.length; i++){
+      /*  for(int i = 0; i < token.length; i++){
             System.out.println(token[i]);
-        }
+        }*/
         queryStr = "PName:" + token[0];
         if(token.length > 1){
             for(int i = 1; i < token.length; i++){
@@ -103,24 +102,60 @@ public class solrj {
         }
        return queryStr;
     }
-    private String[] insertBackSlash(String[] token){      
+    
+    // Convert AND and OR to lowercase or else the program will mistook them 
+    // as boolean logics.
+    private String[] modifyString(String[] token){      
         for(int i = 0; i < token.length; i++){
-            String newstr = "";
-            // AND and OR are boolean logics in Solr so if a user types either, 
-        // which is highly unlikely, the program will convert them to regular 
-        // words "and" and "or".
-        if(token[i].indexOf("AND") >= 0 || token[i].indexOf("OR") >= 0){
-            newstr = token[i].toLowerCase();
-        }
-        else
-            for(int j = 0; j < token[i].length(); j++){
-                if(token[i].charAt(j) == '\"')
-                    newstr += "\\\"";
-                else
-                    newstr += token[i].charAt(j);
+            String newstr;
+            if(token[i].indexOf("AND") >= 0 || token[i].indexOf("OR") >= 0){
+                newstr = token[i].toLowerCase();
             }
-        token[i] = newstr;
+            else
+                newstr = insertBackSlash(token[i]);
+            token[i] = newstr;
         }
         return token;
+    }
+    // Insert a backslash before a special character
+    public String insertBackSlash(String tokenIndex){
+        String newstr = "";
+        for(int i = 0; i < tokenIndex.length(); i++){
+            if(tokenIndex.charAt(i) == '"')
+                newstr += "\\\"~1";
+            else if (tokenIndex.charAt(i) == '(')
+                newstr += "\\(";
+            else if (tokenIndex.charAt(i) == ')')
+                newstr += "\\)";
+            else if (tokenIndex.charAt(i) == '/')
+                newstr += "\\/";
+            else if (tokenIndex.charAt(i) == '\\')
+                newstr += "\\\\";
+            else if (tokenIndex.charAt(i) == '-')
+                newstr += "\\-";
+            else if (tokenIndex.charAt(i) == '!')
+                newstr += "\\!";
+            else if (tokenIndex.charAt(i) == '^')
+                newstr += "\\^";
+            else if (tokenIndex.charAt(i) == '-')
+                newstr += "\\-";
+            else if (tokenIndex.charAt(i) == '+')
+                newstr += "\\+";
+            else if (tokenIndex.charAt(i) == '{')
+                newstr += "\\{";
+            else if (tokenIndex.charAt(i) == '}')
+                newstr += "\\}";
+            else if (tokenIndex.charAt(i) == '[')
+                newstr += "\\[";
+            else if (tokenIndex.charAt(i) == ']')
+                newstr += "\\]";
+            else if (tokenIndex.charAt(i) == '~')
+                newstr += "\\~";
+            else if (tokenIndex.charAt(i) == ':')
+                newstr += "\\:";
+            else
+                newstr += tokenIndex.charAt(i);
+        }
+        return newstr;
     }
 }

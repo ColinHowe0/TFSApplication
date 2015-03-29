@@ -90,9 +90,9 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Component id="group" max="32767" attributes="0"/>
-                              <Component id="Size1" max="32767" attributes="0"/>
                               <Component id="MClass" alignment="0" max="32767" attributes="0"/>
                               <Component id="PartType" alignment="0" max="32767" attributes="0"/>
+                              <Component id="Size1" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -126,9 +126,9 @@
                       <Component id="MClass" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Size1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="Size1" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="searchButton" min="-2" max="-2" attributes="0"/>
@@ -151,7 +151,7 @@
         <Component class="javax.swing.JComboBox" name="PartType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;,&#xa;    &quot;Connector&quot;,})" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;,&#xa;    &quot;Connector&quot;&#xa;,&quot;Elbow, 90&quot;&#xa;,&quot;Tee, Equal&quot;&#xa;,&quot;Tube, Seamless&quot;&#xa;,&quot;Elbow, 90 Long Radius&quot;&#xa;,&quot;Cap&quot;&#xa;,&quot;Adapter&quot;&#xa;,&quot;Adapter, Male&quot;&#xa;,&quot;Adapter. Female&quot;&#xa;,&quot;Coupling&quot;&#xa;,&quot;Reducer, Concentric&quot;&#xa;,&quot;Elbow, 45&quot;&#xa;,&quot;Pipe, Welded&quot;&#xa;,&quot;Union Half&quot;&#xa;,&quot;Cross&quot;&#xa;,&quot;Lateral, 45&quot;&#xa;,&quot;Reducer, Eccentric&quot;&#xa;,&quot;Tee, Reducing&quot;&#xa;,&quot;Flange, Reducing&quot;&#xa;,&quot;Reducer, Concentric Short&quot;&#xa;,&quot;Flange, Blind&quot;&#xa;,&quot;Backing Ring&quot;&#xa;,&quot;Pipe, Seamless&quot;&#xa;,&quot;Plug, Hex&quot;&#xa;,&quot;Reducer, Bushing&quot;&#xa;,&quot;Flange, Single part&quot;&#xa;,&quot;Elbow, 22.5&quot;&#xa;,&quot;Wye&quot;&#xa;,&quot;Wye, Reducing&quot;&#xa;,&quot;Wye, Reducing Double&quot;&#xa;,&quot;Elbow, 90 Short Radius&quot;&#xa;,&quot;Flange, Van Stone&quot;&#xa;,&quot;Elbow, 30&quot;&#xa;,&quot;Elbow 11.5&quot;&#xa;,&quot;Flange, Ring&quot;&#xa;,&quot;Tee, Extended Leg&quot;&#xa;,&quot;Reducer, Concentric Machined Flush&quot;&#xa;,&quot;Elbow, 90 Extended Leg&quot;&#xa;,&quot;Bend, U&quot;&#xa;,&quot;Elbow, 45 Long Radius&quot;&#xa;,&quot;Stub End, Pipe&quot;&#xa;,&quot;Stub End, Pipe Long&quot;&#xa;,&quot;Union,  Reducing&quot;&#xa;,&quot;Bulkhead&quot;&#xa;,&quot;Union&quot;&#xa;,&quot;Gland, Long&quot;&#xa;,&quot;Gland, Short&quot;&#xa;,&quot;Union, Rotating&quot;&#xa;,&quot;Gland&quot;&#xa;,&quot;Centering Ring&quot;&#xa;,&quot;Flange, Short&quot;&#xa;,&quot;Flange, Longneck&quot;&#xa;,&quot;Flange, Bored&quot;&#xa;,&quot;Flange, Blank&quot;&#xa;,&quot;Flange, Blank Stub End&quot;&#xa;,&quot;Elbow, 60&quot;&#xa;,&quot;Wye, Double&quot;&#xa;,&quot;Elbow 15&quot;&#xa;,&quot;Strut End Cap, Red&quot;&#xa;,&quot;Cap, Allthread Rod&quot;&#xa;,&quot;Beam Clamp, Adjustable&quot;&#xa;,&quot;Double Strut Channel 10&apos; Length&quot;&#xa;,&quot;Strut 45 Corner Angle&quot;&#xa;,&quot;Strut Channel 10&apos; Length&quot;&#xa;,&quot;Strut L&quot;&#xa;,&quot;Strut T&quot;&#xa;,&quot;Strut U&quot;&#xa;,&quot;Strut Z&quot;&#xa;,&quot;Washer, Square&quot; &#xa;,&quot;Strut Double Wing&quot;&#xa;,&quot;Strut Splice Plate&quot;&#xa;,&quot;Strut Cross&quot;&#xa;,&quot;Strut Single Wing Left&quot;&#xa;,&quot;Strut Single Wing Right&quot;&#xa;,&quot;Double Strut Channel 20&apos; Length&quot;&#xa;,&quot;Strut Channel 20&apos; Length&quot;&#xa;,&quot;Bolt, Hex&quot;&#xa;,&quot;Strut Channel Nut&quot;&#xa;,&quot;Washer, Fender&quot;&#xa;,&quot;Washer, Flat&quot;&#xa;,&quot;Carbon Steel, Zinc Plated&quot;&#xa;,&quot;Washer, SAE&quot;&#xa;,&quot;Rod, Allthread 6&apos; Length&quot;&#xa;,&quot;Rod, Allthread 10&apos; Length&quot;&#xa;,&quot;Nut, Hex Grade 5&quot;&#xa;,&quot;Anchor, Hilti Drop-in&quot;&#xa;,&quot;Anchor, Hilti TZ&quot;&#xa;,&quot;Double Strut Post Base&quot;&#xa;,&quot;Rod Coupling&quot;&#xa;,&quot;Carbon Steel, Electrogalvanized&quot;&#xa;,&quot;Strut 90 Corner Angle&quot;&#xa;,&quot;Strut Beam Clamp (U-Bolt)&quot;&#xa;,&quot;Strut Bracket&quot;&#xa;,&quot;Strut Cap&quot;&#xa;,&quot;Strut Cush-a-Clamp&quot;&#xa;,&quot;Clamp, KF (Wingnut)&quot;&#xa;,&quot;Clamp, KF (Lever)&quot;&#xa;,&quot;Restraint Fitting&quot;&#xa;,&quot;Bellows&quot;,})" type="code"/>
             </Property>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="0" type="code"/>
@@ -167,7 +167,7 @@
         <Component class="javax.swing.JComboBox" name="Size1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;, &quot;1\&quot;&quot;,&quot;2\&quot;&quot;, &quot;3\&quot;&quot;, &quot;4\&quot;&quot;})" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;&#xa;    ,&quot;0.25\&quot; (1/4)&quot;&#xa;    ,&quot;0.5\&quot; (1/2)&quot;&#xa;    ,&quot;0.75\&quot; (3/4)&quot;&#xa;    ,&quot;1\&quot;&quot;&#xa;    ,&quot;0.375\&quot; (3/8)&quot;&#xa;    ,&quot;1.25\&quot; (1 1/4)&quot;&#xa;    ,&quot;1.5\&quot; (1 1/2)&quot;&#xa;    ,&quot;2\&quot;&quot;&#xa;    ,&quot;3\&quot;&quot;&#xa;    ,&quot;4\&quot;&quot;&#xa;    ,&quot;6\&quot;&quot;&#xa;    ,&quot;8\&quot;&quot;&#xa;    ,&quot;10\&quot;&quot;&#xa;    ,&quot;12\&quot;&quot;&#xa;    ,&quot;20 mm&quot;&#xa;    ,&quot;25 mm&quot;&#xa;    ,&quot;32 mm&quot;&#xa;    ,&quot;40 mm&quot;&#xa;    ,&quot;50 mm&quot;&#xa;    ,&quot;63 mm&quot;&#xa;    ,&quot;75 mm&quot;&#xa;    ,&quot;90 mm&quot;&#xa;    ,&quot;110 mm&quot;&#xa;    ,&quot;160 mm&quot;&#xa;    ,&quot;200 mm&quot;&#xa;    ,&quot;250 mm&quot;&#xa;    ,&quot;315 mm&quot;&#xa;    ,&quot;355 mm&quot;&#xa;    ,&quot;400 mm&quot;&#xa;    ,&quot;450 mm&quot;&#xa;    ,&quot;500 mm&quot;&#xa;    ,&quot;2.5\&quot; (2 1/2)&quot;&#xa;    ,&quot;5\&quot;&quot;&#xa;    ,&quot;14\&quot;&quot;&#xa;    ,&quot;16\&quot;&quot;&#xa;    ,&quot;18\&quot;&quot;&#xa;    ,&quot;20\&quot;&quot;&#xa;    ,&quot;24\&quot;&quot;&#xa;    ,&quot;225 mm&quot;&#xa;    ,&quot;3.5\&quot; (3 1/2)&quot;&#xa;    ,&quot;30\&quot;&quot;&#xa;    ,&quot;36\&quot;&quot;&#xa;    ,&quot;42\&quot;&quot;&#xa;    ,&quot;48\&quot;&quot;&#xa;    ,&quot;0.125\&quot; (1/8)&quot;&#xa;    ,&quot;0.5\&quot; (1/2)&quot;&#xa;    ,&quot;0.25\&quot; (1/4)&quot;&#xa;    ,&quot;0.75\&quot; (3/4)&quot;&#xa;    ,&quot;1\&quot;&quot;&#xa;    ,&quot;0.375\&quot; (3/8)&quot;&#xa;    ,&quot;0.25\&quot; (1/4) (Male)&quot;&#xa;    ,&quot;0.5\&quot; (1/2) (Male)&quot;&#xa;    ,&quot;0.75\&quot; (3/4) (Male)&quot;&#xa;    ,&quot;1\&quot; (Male)&quot;&#xa;    ,&quot;0.25\&quot; (1/4) (Female)&quot;&#xa;    ,&quot;0.5\&quot; (1/2) (Female)&quot;&#xa;    ,&quot;0.75\&quot; (3/4) (Female)&quot;&#xa;    ,&quot;320 mm&quot;&#xa;    ,&quot;4.5\&quot; (4 1/2)&quot;&#xa;    ,&quot;1.625\&apos;&quot;&#xa;    ,&quot;0.8125\&quot; (13/16)\&quot;&quot;&#xa;    ,&quot;1.625 (1 5/8)&quot;&#xa;    ,&quot;4 Hole&quot;&#xa;    ,&quot;3 Hole&quot;&#xa;    ,&quot;5 Hole&quot;&#xa;    ,&quot;2 hole&quot;&#xa;    ,&quot;0.5\&quot;&quot;&#xa;    ,&quot;3.25\&quot;&quot;&#xa;    ,&quot;12\&quot;&quot;&#xa;    ,&quot;18\&quot;&quot;&#xa;    ,&quot;0.8125 (13/16)&quot;&#xa;    ,&quot;7 Hole&quot;&#xa;    ,&quot;8 Hole&quot;&#xa;    ,&quot;1.25\&quot;&quot;&#xa;    ,&quot;1.5\&quot;&quot;&#xa;    ,&quot;3\&quot;&quot;})" type="code"/>
             </Property>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="0" type="code"/>
@@ -181,9 +181,6 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="searchBar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="connector PFA"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchBarActionPerformed"/>
           </Events>
@@ -235,7 +232,7 @@
         <Component class="javax.swing.JComboBox" name="MClass">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;, &quot;SS&quot;, &quot;Carbon Steel&quot;})" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&#xa;    &quot;None&quot;, &quot;PFA&quot;&#xa;,&quot;Polyethylene, 150 lb&quot;&#xa;,&quot;Carbon Steel, PTFE Lined 150 lb&quot;&#xa;,&quot;Polypropylene, 150 lb&quot; &#xa;,&quot;PVC Sch 40 Clear&quot; &#xa;,&quot;PVC Sch 80&quot; &#xa;,&quot;PVDF HP, PN 16&quot; &#xa;,&quot;SS 304L Sch 10&quot; &#xa;,&quot;SS 316L Sch 10&quot; &#xa;,&quot;SS 316L 10 Ra Max/EP&quot; &#xa;,&quot;SS 316L 20 Ra Max/MP&quot; &#xa;,&quot;SS 316L Coaxial 10 Ra Max/EP&quot; &#xa;,&quot;SS 316 CFOS&quot; &#xa;,&quot;SS 316L EP/UHP&quot; &#xa;,&quot;SS 316L EP&quot; &#xa;,&quot;SS 316L EP/UHP HiFlo&quot; &#xa;,&quot;SS 316L EP HiFlo&quot; &#xa;,&quot;SS 316L EP/UHP MicroFit&quot; &#xa;,&quot;SS 304&quot; &#xa;,&quot;FEP&quot; &#xa;,&quot;Carbon Steel, PTFE Lined 300 lb&quot; &#xa;,&quot;SS 304L 20 Ra Max/MP&quot; &#xa;,&quot;PVC Sch 80 Fabricated&quot; &#xa;,&quot;SS 304L&quot; &#xa;,&quot;PVDF HP, PN 16 Fabricated&quot; &#xa;,&quot;Polypropylene, 150 lb Fabricated&quot; &#xa;,&quot;Plastic&quot; &#xa;,&quot;Carbon Steel, Malleable&quot; &#xa;,&quot;Carbon Steel, Green&quot; &#xa;,&quot;Carbon Steel, Electrogalvanized&quot; &#xa;,&quot;Carbon Steel, Zinc Plated&quot;  &#xa;,&quot;Washer, Square&quot; &#xa;,&quot;HDI SS 303&quot;&#xa;,&quot;Stainless Steel&quot;&#xa;,&quot;Strut 45 Corner Angle&quot;&#xa;,&quot;Carbon Steel, Zinc Plated (Dichromate Finish)&quot;})" type="code"/>
             </Property>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="0" type="code"/>
