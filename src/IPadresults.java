@@ -14,7 +14,6 @@ import javax.swing.JTextArea;
  * @author Alexandre
  */
 public class IPadresults extends javax.swing.JFrame {
-    Container c;
     IPadsearch s;
     /**
      * Creates new form IPadresults
@@ -35,19 +34,21 @@ public class IPadresults extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         ResultLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        resultBox = new javax.swing.JTextArea();
         searchBar = new java.awt.TextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        filterText = new javax.swing.JTextField();
+        filterLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ResultLabel.setText("Result(s): ");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        resultBox.setColumns(20);
+        resultBox.setLineWrap(true);
+        resultBox.setRows(5);
+        jScrollPane1.setViewportView(resultBox);
 
         searchBar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,12 +58,14 @@ public class IPadresults extends javax.swing.JFrame {
 
         jLabel2.setText("You have requested:");
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
+
+        filterLabel.setText("Filter:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -71,15 +74,15 @@ public class IPadresults extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(filterText)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backButton)
+                            .addComponent(filterLabel)
                             .addComponent(ResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -91,12 +94,15 @@ public class IPadresults extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ResultLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filterLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(23, 23, 23))
+                .addComponent(filterText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ResultLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(backButton))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,12 +127,17 @@ public class IPadresults extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
+        ResultLabel.setEnabled(true);
+        resultBox.setEditable(true);
+        filterText.setEditable(true);
+        searchBar.setEditable(true);
         ResultLabel.setText("Result(s): ");
-        jTextArea1.setText("");
+        resultBox.setText("");
+        filterText.setText("");
         s.switchToSearchPanel();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,15 +174,19 @@ public class IPadresults extends javax.swing.JFrame {
         });
     }
     public void switchToResultPanel(IPadsearch s){
+        resultBox.setEditable(false);
+        searchBar.setEditable(false);
+        filterText.setEditable(false);
         this.s = s;
         s.setContentPane(getPanel());
         s.getContentPane().repaint();
+        resultBox.setCaretPosition(0);
     }
     public JPanel getPanel(){
         return jPanel1;
     }
     public JTextArea getTextArea(){
-        return jTextArea1;
+        return resultBox;
     }
     
     public TextField getTextField(){
@@ -180,14 +195,23 @@ public class IPadresults extends javax.swing.JFrame {
     public JLabel getResultLabel(){
         return ResultLabel;
     }
+    public void setfilterText(String str){
+        if("".equals(filterText.getText()))
+            filterText.setText("[" + str + "]");
+        else
+            filterText.setText(filterText.getText() + " [" + str + "]");
+        filterText.setEditable(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ResultLabel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton backButton;
+    private javax.swing.JLabel filterLabel;
+    private javax.swing.JTextField filterText;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea resultBox;
     private java.awt.TextField searchBar;
     // End of variables declaration//GEN-END:variables
 }

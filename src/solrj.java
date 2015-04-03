@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -12,15 +16,19 @@ import org.noggit.JSONUtil;
  * @author Alexandre
  */
 public class solrj {
+    File file = new File("test.json");
+   // String url = "http://localhost:8983/solr/";
+    String url = "http://45.56.71.18:8983/solr/";
+    SolrServer server = new HttpSolrServer(url);
     private static IPadresults r;
-    private boolean isFirstToken = true;
+    private boolean isFirstToken;
     public solrj(IPadresults r) throws SolrServerException{
         solrj.r = r;
     }
     
     // Get the results from querying and send the results to the IPadresults 
     // panel
-    private void sendQueryResponse(SolrServer server, SolrQuery query){
+    private void sendQueryResponse(SolrServer server, SolrQuery query) throws IOException{
         try {
             QueryResponse response = server.query(query);
              SolrDocumentList results = response.getResults();
@@ -38,24 +46,32 @@ public class solrj {
                         "End Type1: " + (String)a.getFieldValue("ET1") + "\n\n";
                 count++;
             }
-            
+           // outputToJSON(result);
             // Send the results
             r.getResultLabel().setText(r.getResultLabel().getText() + "" + count);
             r.getTextArea().setText(result);
         } catch (SolrServerException ex) {
-            System.out.println("ERROR: Unable to connect to server");
+            System.out.println(ex);
         }
     }
-    public void executeQuery(String[] str) throws SolrServerException{
+    private void outputToJSON(String result) throws IOException{
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
+                String returnValue = JSONUtil.toJSON(result); //this has the json documents
+                output.write(returnValue);
+        
+        }
+        System.out.println(file.length() + " bytes");
+    }
+    public void executeQuery(String[] str) throws SolrServerException, IOException{
+        isFirstToken = true;
         String queryStr = "";
         queryStr = combineTexts(str, queryStr);
-        String url = "http://localhost:8983/solr/";
-        SolrServer server = new HttpSolrServer(url);
          
         // Query
         SolrQuery query = new SolrQuery(url);
         query.setRows(10);
         query.setQuery(queryStr);
+        System.out.println(queryStr);
         sendQueryResponse(server, query);
     }
     
@@ -66,24 +82,36 @@ public class solrj {
             queryStr = tokenizeGeneralSearchString(str[0], queryStr);
         }
         if(!str[1].isEmpty()){
-            queryStr = "Group:" + str[1];
             if(!isFirstToken)
-                queryStr += " AND " + queryStr;
+                queryStr += " AND Group:" + str[1];
+            else{
+                queryStr = "Group:" + str[1];
+                isFirstToken = false;
+            }
         }
         if(!str[2].isEmpty()){
-            queryStr = "PT:" + str[2];
             if(!isFirstToken)
-                queryStr += " AND " + queryStr;
+                queryStr += " AND PT:" + str[2];
+            else{
+                queryStr = "PT:" + str[2];
+                isFirstToken = false;
+            }
         }
         if(!str[3].isEmpty()){
-            queryStr = "Class:" + str[3];
             if(!isFirstToken)
-                queryStr += " AND " + queryStr;
+                queryStr += " AND Class:" + str[3];
+            else{
+                queryStr = "Class:" + str[3];
+                isFirstToken = false;
+            }
         }
         if(!str[4].isEmpty()){
-            queryStr = "Size1:" + str[4];
             if(!isFirstToken)
-                queryStr += " AND " + queryStr;
+                queryStr += " AND Size1:" + str[4];
+            else{
+                queryStr = "Size1:" + str[4];
+                isFirstToken = false;
+            }
         }
         return queryStr;
     }

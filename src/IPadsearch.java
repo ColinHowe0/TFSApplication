@@ -1,5 +1,6 @@
 
 import java.awt.Container;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -15,6 +16,7 @@ import org.apache.solr.client.solrj.SolrServerException;
  */
 public class IPadsearch extends javax.swing.JFrame {
     solrj j;
+    boolean isFirstTime = true;
     IPadresults resultPanel = new IPadresults();
     Container container;
     String[] fetch = new String[5];
@@ -48,6 +50,8 @@ public class IPadsearch extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         group = new javax.swing.JComboBox();
         MClass = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,102 +172,86 @@ public class IPadsearch extends javax.swing.JFrame {
             ,"Restraint Fitting"
             ,"Bellows",}));
 PartType.setSelectedIndex(0);
-PartType.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        PartTypeActionPerformed(evt);
-    }
-    });
 
-    Size1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-        "None"
-        ,"0.25\" (1/4)"
-        ,"0.5\" (1/2)"
-        ,"0.75\" (3/4)"
-        ,"1\""
-        ,"0.375\" (3/8)"
-        ,"1.25\" (1 1/4)"
-        ,"1.5\" (1 1/2)"
-        ,"2\""
-        ,"3\""
-        ,"4\""
-        ,"6\""
-        ,"8\""
-        ,"10\""
-        ,"12\""
-        ,"20 mm"
-        ,"25 mm"
-        ,"32 mm"
-        ,"40 mm"
-        ,"50 mm"
-        ,"63 mm"
-        ,"75 mm"
-        ,"90 mm"
-        ,"110 mm"
-        ,"160 mm"
-        ,"200 mm"
-        ,"250 mm"
-        ,"315 mm"
-        ,"355 mm"
-        ,"400 mm"
-        ,"450 mm"
-        ,"500 mm"
-        ,"2.5\" (2 1/2)"
-        ,"5\""
-        ,"14\""
-        ,"16\""
-        ,"18\""
-        ,"20\""
-        ,"24\""
-        ,"225 mm"
-        ,"3.5\" (3 1/2)"
-        ,"30\""
-        ,"36\""
-        ,"42\""
-        ,"48\""
-        ,"0.125\" (1/8)"
-        ,"0.5\" (1/2)"
-        ,"0.25\" (1/4)"
-        ,"0.75\" (3/4)"
-        ,"1\""
-        ,"0.375\" (3/8)"
-        ,"0.25\" (1/4) (Male)"
-        ,"0.5\" (1/2) (Male)"
-        ,"0.75\" (3/4) (Male)"
-        ,"1\" (Male)"
-        ,"0.25\" (1/4) (Female)"
-        ,"0.5\" (1/2) (Female)"
-        ,"0.75\" (3/4) (Female)"
-        ,"320 mm"
-        ,"4.5\" (4 1/2)"
-        ,"1.625\'"
-        ,"0.8125\" (13/16)\""
-        ,"1.625 (1 5/8)"
-        ,"4 Hole"
-        ,"3 Hole"
-        ,"5 Hole"
-        ,"2 hole"
-        ,"0.5\""
-        ,"3.25\""
-        ,"12\""
-        ,"18\""
-        ,"0.8125 (13/16)"
-        ,"7 Hole"
-        ,"8 Hole"
-        ,"1.25\""
-        ,"1.5\""
-        ,"3\""}));
-Size1.setSelectedIndex(0);
-Size1.addActionListener(new java.awt.event.ActionListener() {
-public void actionPerformed(java.awt.event.ActionEvent evt) {
-    Size1ActionPerformed(evt);
-    }
-    });
-
-    searchBar.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            searchBarActionPerformed(evt);
-        }
-    });
+Size1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
+    "None"
+    ,"0.25\" (1/4)"
+    ,"0.5\" (1/2)"
+    ,"0.75\" (3/4)"
+    ,"1\""
+    ,"0.375\" (3/8)"
+    ,"1.25\" (1 1/4)"
+    ,"1.5\" (1 1/2)"
+    ,"2\""
+    ,"3\""
+    ,"4\""
+    ,"6\""
+    ,"8\""
+    ,"10\""
+    ,"12\""
+    ,"20 mm"
+    ,"25 mm"
+    ,"32 mm"
+    ,"40 mm"
+    ,"50 mm"
+    ,"63 mm"
+    ,"75 mm"
+    ,"90 mm"
+    ,"110 mm"
+    ,"160 mm"
+    ,"200 mm"
+    ,"250 mm"
+    ,"315 mm"
+    ,"355 mm"
+    ,"400 mm"
+    ,"450 mm"
+    ,"500 mm"
+    ,"2.5\" (2 1/2)"
+    ,"5\""
+    ,"14\""
+    ,"16\""
+    ,"18\""
+    ,"20\""
+    ,"24\""
+    ,"225 mm"
+    ,"3.5\" (3 1/2)"
+    ,"30\""
+    ,"36\""
+    ,"42\""
+    ,"48\""
+    ,"0.125\" (1/8)"
+    ,"0.5\" (1/2)"
+    ,"0.25\" (1/4)"
+    ,"0.75\" (3/4)"
+    ,"1\""
+    ,"0.375\" (3/8)"
+    ,"0.25\" (1/4) (Male)"
+    ,"0.5\" (1/2) (Male)"
+    ,"0.75\" (3/4) (Male)"
+    ,"1\" (Male)"
+    ,"0.25\" (1/4) (Female)"
+    ,"0.5\" (1/2) (Female)"
+    ,"0.75\" (3/4) (Female)"
+    ,"320 mm"
+    ,"4.5\" (4 1/2)"
+    ,"1.625\'"
+    ,"0.8125\" (13/16)\""
+    ,"1.625 (1 5/8)"
+    ,"4 Hole"
+    ,"3 Hole"
+    ,"5 Hole"
+    ,"2 hole"
+    ,"0.5\""
+    ,"3.25\""
+    ,"12\""
+    ,"18\""
+    ,"0.8125 (13/16)"
+    ,"7 Hole"
+    ,"8 Hole"
+    ,"1.25\""
+    ,"1.5\""
+    ,"3\""}));
+    Size1.setSelectedIndex(0);
 
     jLabel3.setText("Group:");
 
@@ -287,53 +275,52 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
         "Piping Hardware & Gaskets Purchased Parts",
         "Equipment, Valves, Specials, Engineered Items" }));
 group.setSelectedIndex(0);
-group.addActionListener(new java.awt.event.ActionListener() {
-public void actionPerformed(java.awt.event.ActionEvent evt) {
-    groupActionPerformed(evt);
-    }
-    });
 
-    MClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-        "None", "PFA"
-        ,"Polyethylene, 150 lb"
-        ,"Carbon Steel, PTFE Lined 150 lb"
-        ,"Polypropylene, 150 lb"
-        ,"PVC Sch 40 Clear"
-        ,"PVC Sch 80"
-        ,"PVDF HP, PN 16"
-        ,"SS 304L Sch 10"
-        ,"SS 316L Sch 10"
-        ,"SS 316L 10 Ra Max/EP"
-        ,"SS 316L 20 Ra Max/MP"
-        ,"SS 316L Coaxial 10 Ra Max/EP"
-        ,"SS 316 CFOS"
-        ,"SS 316L EP/UHP"
-        ,"SS 316L EP"
-        ,"SS 316L EP/UHP HiFlo"
-        ,"SS 316L EP HiFlo"
-        ,"SS 316L EP/UHP MicroFit"
-        ,"SS 304"
-        ,"FEP"
-        ,"Carbon Steel, PTFE Lined 300 lb"
-        ,"SS 304L 20 Ra Max/MP"
-        ,"PVC Sch 80 Fabricated"
-        ,"SS 304L"
-        ,"PVDF HP, PN 16 Fabricated"
-        ,"Polypropylene, 150 lb Fabricated"
-        ,"Plastic"
-        ,"Carbon Steel, Malleable"
-        ,"Carbon Steel, Green"
-        ,"Carbon Steel, Electrogalvanized"
-        ,"Carbon Steel, Zinc Plated"
-        ,"Washer, Square"
-        ,"HDI SS 303"
-        ,"Stainless Steel"
-        ,"Strut 45 Corner Angle"
-        ,"Carbon Steel, Zinc Plated (Dichromate Finish)"}));
+MClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
+"None", "PFA"
+,"Polyethylene, 150 lb"
+,"Carbon Steel, PTFE Lined 150 lb"
+,"Polypropylene, 150 lb"
+,"PVC Sch 40 Clear"
+,"PVC Sch 80"
+,"PVDF HP, PN 16"
+,"SS 304L Sch 10"
+,"SS 316L Sch 10"
+,"SS 316L 10 Ra Max/EP"
+,"SS 316L 20 Ra Max/MP"
+,"SS 316L Coaxial 10 Ra Max/EP"
+,"SS 316 CFOS"
+,"SS 316L EP/UHP"
+,"SS 316L EP"
+,"SS 316L EP/UHP HiFlo"
+,"SS 316L EP HiFlo"
+,"SS 316L EP/UHP MicroFit"
+,"SS 304"
+,"FEP"
+,"Carbon Steel, PTFE Lined 300 lb"
+,"SS 304L 20 Ra Max/MP"
+,"PVC Sch 80 Fabricated"
+,"SS 304L"
+,"PVDF HP, PN 16 Fabricated"
+,"Polypropylene, 150 lb Fabricated"
+,"Plastic"
+,"Carbon Steel, Malleable"
+,"Carbon Steel, Green"
+,"Carbon Steel, Electrogalvanized"
+,"Carbon Steel, Zinc Plated"
+,"Washer, Square"
+,"HDI SS 303"
+,"Stainless Steel"
+,"Strut 45 Corner Angle"
+,"Carbon Steel, Zinc Plated (Dichromate Finish)"}));
 MClass.setSelectedIndex(0);
-MClass.addActionListener(new java.awt.event.ActionListener() {
-public void actionPerformed(java.awt.event.ActionEvent evt) {
-    MClassActionPerformed(evt);
+
+jLabel7.setText("TEST");
+
+resetButton.setText("Reset");
+resetButton.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        resetButtonActionPerformed(evt);
     }
     });
 
@@ -350,7 +337,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(searchBar)))
                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -360,14 +347,20 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                         .addComponent(jLabel3))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(searchButton)
-                            .addGap(0, 0, Short.MAX_VALUE))
                         .addComponent(group, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(MClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PartType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Size1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGap(54, 54, 54))
+                        .addComponent(Size1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(searchButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(resetButton)
+                            .addGap(0, 0, Short.MAX_VALUE)))))
+            .addGap(16, 16, 16))
+        .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(105, 105, 105)
+            .addComponent(jLabel7)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,10 +386,14 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel6)
-                .addComponent(Size1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(searchButton)
-            .addContainerGap(93, Short.MAX_VALUE))
+                .addComponent(Size1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(5, 5, 5)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(searchButton)
+                .addComponent(resetButton))
+            .addGap(18, 18, 18)
+            .addComponent(jLabel7)
+            .addContainerGap(61, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -407,7 +404,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(22, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,49 +417,62 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MClassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MClassActionPerformed
-
-    private void groupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupActionPerformed
-        // System.out.println(group.getSelectedItem().toString());
-    }//GEN-LAST:event_groupActionPerformed
-
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         gatherList();
+        if(isFirstTime){
+            try {
+                j = new solrj(resultPanel);
+            } 
+            catch (SolrServerException ex) {
+                Logger.getLogger(IPadsearch.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            isFirstTime =false;
+        }
+        container = getContentPane();
+        resultPanel.getTextField().setText(searchBar.getText());
         try {
-            container = getContentPane();
-            resultPanel.getTextField().setText(searchBar.getText());
-            j = new solrj(resultPanel);
             j.executeQuery(fetch);
-            resultPanel.switchToResultPanel(this);
-        } catch (SolrServerException ex) {
+        } 
+        catch (SolrServerException | IOException ex) {
             Logger.getLogger(IPadsearch.class.getName()).log(Level.SEVERE, null, ex);
         }
+            resultPanel.switchToResultPanel(this);
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        searchBar.setText("");
+        group.setSelectedIndex(0);
+        PartType.setSelectedIndex(0);
+        MClass.setSelectedIndex(0);
+        Size1.setSelectedIndex(0);
+    }//GEN-LAST:event_resetButtonActionPerformed
     
     // Gather all the texts from the search bar and drop down.
     private void gatherList(){
         fetch[0] = searchBar.getText();
         if(group.getSelectedIndex() != 0){
-            fetch[1] = group.getSelectedItem().toString();
+            fetch[1] = "(" + group.getSelectedItem().toString() + ")";
+            resultPanel.setfilterText(fetch[1]);
         }
         else{
             fetch[1] = "";
         }
         if(PartType.getSelectedIndex() != 0){
-            fetch[2] = PartType.getSelectedItem().toString();
+            fetch[2] = "(" + PartType.getSelectedItem().toString()+ ")";
+            resultPanel.setfilterText(fetch[2]);
         }
         else{
             fetch[2] = "";
         }
         if(MClass.getSelectedIndex() != 0){
-            fetch[3] = MClass.getSelectedItem().toString();
+            fetch[3] = "(" + MClass.getSelectedItem().toString() + ")";
+            resultPanel.setfilterText(fetch[3]);
         }
         else{
             fetch[3] = "";
         }
         if(Size1.getSelectedIndex() != 0){
+            resultPanel.setfilterText(Size1.getSelectedItem().toString());
             String inch = insertBackSlash(Size1.getSelectedItem().toString());
             fetch[4] = inch;
         }
@@ -470,18 +480,6 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             fetch[4] = "";
         }
     }
-    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchBarActionPerformed
-
-    private void Size1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Size1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Size1ActionPerformed
-
-    private void PartTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PartTypeActionPerformed
-
     public void switchToSearchPanel(){
         setContentPane(container);
         getContentPane().repaint();
@@ -522,12 +520,16 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     }
     public String insertBackSlash(String tokenIndex){
         String newstr = "";
-        for(int i = 0; i < tokenIndex.length(); i++){
-            if(tokenIndex.charAt(i) == '"')
-                newstr += "\\\"~1";
-            else
-                newstr += tokenIndex.charAt(i);
+        if(tokenIndex.charAt(tokenIndex.length() - 1) == '\"'){
+            newstr = tokenIndex.substring(0, tokenIndex.length() - 1) + "\\\"";
         }
+        else
+            for(int i = 0; i < tokenIndex.length(); i++){
+                if(tokenIndex.charAt(i) == '"')
+                    newstr += "\\\"~1";
+                else
+                    newstr += tokenIndex.charAt(i);
+            }
         return newstr;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -541,8 +543,10 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton resetButton;
     private javax.swing.JTextField searchBar;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
