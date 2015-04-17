@@ -25,7 +25,7 @@ import sun.misc.BASE64Encoder;
 public class solrj {
     File file = new File("test.json");
     String url = "http://localhost:8983/solr/";
-    //String url = "http://45.56.71.18:8983/solr/";
+  // String url = "http://45.56.71.18:8983/solr/";
     ArrayList<String> imageList = new ArrayList();
     String rowNum;
     SolrServer server = new HttpSolrServer(url);
@@ -56,8 +56,8 @@ public class solrj {
             Iterator<SolrDocument> iterator = results.iterator();
             String resultString = "";
             int count = 0;
-            SolrDocument imageDoc = new SolrDocument();
             while(iterator.hasNext()){
+                
                 SolrDocument a = iterator.next();
                 String PName = "Part Name: " +(String)a.getFieldValue("PName");
                 String group = "Group: " +(String)a.getFieldValue("Group");
@@ -73,16 +73,19 @@ public class solrj {
                         MFG1 + "\n\n";
                 count++;
                 
-                // Add each unique image name from the result 
-                // as the field name with its Base64 string as the value to the list 
-                // i.e. {"ImageName": "Base64 string"}
                 if(!imageList.contains((String)a.getFieldValue("ImageName"))){
                     imageList.add((String)a.getFieldValue("ImageName"));
-                    imageDoc.addField((String)a.getFieldValue("ImageName"), 
-                            convertToBase64((String)a.getFieldValue("ImageName")));
                 }
             }
-            results.add(imageDoc);
+            
+            // Add each unique image name from the result 
+            // as the field name with its Base64 string as the value to the list 
+            // i.e. {"ImageName": "Base64 string"}
+            for(int i = 0; i< imageList.size(); i++){
+                SolrDocument imageDoc = new SolrDocument();
+                imageDoc.addField(imageList.get(i), convertToBase64(imageList.get(i)));
+                results.add(imageDoc);
+            }
             
             outputToJSON(results);
             
