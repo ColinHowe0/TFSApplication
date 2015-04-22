@@ -26,7 +26,6 @@ public class solrj {
     File file = new File("test.json");
     String url = "http://localhost:8983/solr/";
   // String url = "http://45.56.71.18:8983/solr/";
-    ArrayList<String> imageList = new ArrayList();
     String rowNum;
     SolrServer server = new HttpSolrServer(url);
     private static IPadresults resultPanel;
@@ -55,6 +54,8 @@ public class solrj {
             SolrDocumentList results = response.getResults();             
             Iterator<SolrDocument> iterator = results.iterator();
             String resultString = "";
+            SolrDocumentList imageDocList = new SolrDocumentList();
+            ArrayList<String> imageList = new ArrayList();
             int count = 0;
             while(iterator.hasNext()){
                 
@@ -73,21 +74,19 @@ public class solrj {
                         MFG1 + "\n\n";
                 count++;
                 
-                if(!imageList.contains((String)a.getFieldValue("ImageName"))){
-                    imageList.add((String)a.getFieldValue("ImageName"));
+                // Add each unique image name from the result 
+                // as the field name with its Base64 string as the value to the list 
+                // i.e. {"ImageName": "Base64 string"}
+                String imageName = (String)a.getFieldValue("ImageName");
+                if(!imageList.contains(imageName)){
+                    imageList.add(imageName);
+                    
+                    SolrDocument imageDoc = new SolrDocument();
+                    imageDoc.addField(imageName, convertToBase64(imageName));
+                    imageDocList.add(imageDoc);
                 }
             }
-            
-            // Add each unique image name from the result 
-            // as the field name with its Base64 string as the value to the list 
-            // i.e. {"ImageName": "Base64 string"}
-            for(int i = 0; i< imageList.size(); i++){
-                SolrDocument imageDoc = new SolrDocument();
-                imageDoc.addField(imageList.get(i), convertToBase64(imageList.get(i)));
-                results.add(imageDoc);
-            }
-            
-            outputToJSON(results);
+            outputToJSON(results, imageDocList);
             
             // Send the result to the result panel in IPadresults.form
             resultPanel.getResultLabel().setText(resultPanel.getResultLabel().getText() + "" + count);
@@ -125,9 +124,9 @@ public class solrj {
     }
     
     // Output the result to the JSON file
-    private void outputToJSON(SolrDocumentList result) throws IOException{
+    private void outputToJSON(SolrDocumentList result, SolrDocumentList imageDocList) throws IOException{
         try (BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
-            output.write(JSONUtil.toJSON(result));
+            output.write(JSONUtil.toJSON(result) + "\n" + JSONUtil.toJSON(imageDocList));
             output.close();
         }
         System.out.println("The JSON file size is " + file.length() + " bytes");
@@ -139,27 +138,33 @@ public class solrj {
         if(!str[0].isEmpty()){
             queryStr = tokenizeGeneralSearchString(str[0], queryStr);
         }
+        
+        // Group
         if(!str[1].isEmpty()){
             if(!isFirstToken)
-                queryStr += " AND Group:" + str[1];
+                queryStr += " AND Group: \"" + str[1] + "\"";
             else{
-                queryStr = "Group:" + str[1];
+                queryStr = "Group: \"" + str[1] + "\"";
                 isFirstToken = false;
             }
         }
+        
+        // Part Type
         if(!str[2].isEmpty()){
             if(!isFirstToken)
-                queryStr += " AND PT:" + str[2];
+                queryStr += " AND PT: \"" + str[2] + "\"";
             else{
-                queryStr = "PT:" + str[2];
+                queryStr = "PT: \"" + str[2] + "\"";
                 isFirstToken = false;
             }
         }
+        
+        // Material
         if(!str[3].isEmpty()){
             if(!isFirstToken)
-                queryStr += " AND Class:" + str[3];
+                queryStr += " AND Class: \"" + str[3] + "\"";
             else{
-                queryStr = "Class:" + str[3];
+                queryStr = "Class: \"" + str[3] + "\"";
                 isFirstToken = false;
             }
         }
@@ -181,17 +186,17 @@ public class solrj {
         }
         if(!str[6].isEmpty()){
             if(!isFirstToken)
-                queryStr += " AND ET1:" + str[6];
+                queryStr += " AND ET1: \"" + str[6] + "\"";
             else{
-                queryStr = "ET1:" + str[6];
+                queryStr = "ET1: \"" + str[6] + "\"";
                 isFirstToken = false;
             }
         }
         if(!str[7].isEmpty()){
             if(!isFirstToken)
-                queryStr += " AND ET2:" + str[7];
+                queryStr += " AND ET2: \"" + str[7] + "\"";
             else{
-                queryStr = "ET2:" + str[7];
+                queryStr = "ET2: \"" + str[7] + "\"";
                 isFirstToken = false;
             }
         }
