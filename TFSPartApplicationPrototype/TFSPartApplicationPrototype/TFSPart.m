@@ -52,7 +52,12 @@
         _partClass = partCharacteristics[@"Class"];
         _partEndTypes = [[NSArray alloc] initWithObjects:partCharacteristics[@"ET1"] ? partCharacteristics[@"ET1"] : @"NA", partCharacteristics[@"ET2"] ? partCharacteristics[@"ET2"] : @"NA", partCharacteristics[@"ET3"] ? partCharacteristics[@"ET3"] : @"NA",nil];
         _partSizes = [[NSArray alloc] initWithObjects:partCharacteristics[@"Size1"] ? partCharacteristics[@"Size1"] : @"NA", partCharacteristics[@"Size2"] ? partCharacteristics[@"Size2"] : @"NA", partCharacteristics[@"Size3"] ? partCharacteristics[@"Size3"] : @"NA", nil];
-        _partManufacturers = [[NSArray alloc] initWithObjects:partCharacteristics[@"MFG1"] ? partCharacteristics[@"MFG1"] : @"NA", partCharacteristics[@"MFG2"] ? partCharacteristics[@"MFG3"] : @"NA", partCharacteristics[@"MFG3"] ? partCharacteristics[@"MFG3"] : @"NA", nil];
+        NSString *mfgOneString = [NSString stringWithFormat:@"%@ - %@", partCharacteristics[@"MFG1"] ? partCharacteristics[@"MFG1"] : @"NA", partCharacteristics[@"MFGN1"] ? partCharacteristics[@"MFGN1"] : @"NA"];
+        NSString *mfgTwoString = [NSString stringWithFormat:@"%@ - %@", partCharacteristics[@"MFG2"] ? partCharacteristics[@"MFG2"] : @"NA", partCharacteristics[@"MFGN2"] ? partCharacteristics[@"MFGN2"] : @"NA" ];
+        NSString *mfgThreeString = [NSString stringWithFormat:@"%@ - %@", partCharacteristics[@"MFG3"] ? partCharacteristics[@"MFG3"] : @"NA", partCharacteristics[@"MFGN3"] ? partCharacteristics[@"MFGN3"] : @"NA" ];
+        
+        
+        _partManufacturers = [[NSArray alloc] initWithObjects:mfgOneString, mfgTwoString, mfgThreeString, nil];
         _imageName = partCharacteristics[@"ImageName"];
         
         if(!_partNumber) _partNumber = @"NA";
@@ -68,14 +73,14 @@
     return self;
 }
 
-- (void)setThumbnailFromImage:(UIImage *)image
+- (void)setThumbnailFromImage:(UIImage *)image withDimension:(CGRect)dimension
 {
    
     
     CGSize origImageSize = image.size;
     
     //The rectangle of the thumbnail
-    CGRect newRect = CGRectMake(0, 0, 60.0, 60.0);
+    CGRect newRect = dimension;
     
     //Figure out a scaling ratio to make sure we maintain the same aspect ratio
     float ratio = MAX(newRect.size.width / origImageSize.width, newRect.size.height/origImageSize.height);

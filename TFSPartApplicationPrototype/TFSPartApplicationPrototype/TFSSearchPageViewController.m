@@ -8,9 +8,10 @@
 
 #import "TFSSearchPageViewController.h"
 #import "TFSPartResultsViewController.h"
-#import "TFSPartDataRequest.h"
+#import "TFSServerRequest.h"
 #import "TFSPartStore.h"
 #import "TFSImageStore.h"
+#import "TFSConfigurationData.h"
 
 @interface TFSSearchPageViewController ()
 
@@ -30,6 +31,9 @@
 //the ui gesture tap recongnizer for the picker view
 @property (strong, nonatomic) UITapGestureRecognizer *pickerViewRecognizer;
 
+//the UIAlertView for when the application is getting the part data from the server
+@property (strong, nonatomic) UIAlertView *searchDataAlertView;
+
 
 
 
@@ -47,7 +51,6 @@ static UITextField *selectedTextField = nil;
 
 
 
-
 //Designated initializer
 - (id)init
 {
@@ -60,6 +63,9 @@ static UITextField *selectedTextField = nil;
         
         currentSelection = [[NSString alloc] init];
         
+        //initialize the dictionary of terms
+        [self initializeSelectionTermsDictionary];
+
       
         
         
@@ -75,13 +81,14 @@ static UITextField *selectedTextField = nil;
     [super viewDidAppear:animated];
     self.title = @"Search Page";
     
+    [[TFSPartStore parts] resetParts];
+    [[TFSImageStore images] resetImages];
+    
 }
 
 //before search page appears, reset image and part data stores for memory management
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[TFSPartStore parts] resetParts];
-    [[TFSImageStore images] resetImages];
     
     //set the fonts of the text fields and labels ***SETTING THIS PROGRAMATICALLY IS BUGGED AND INTERFERES WITH THE
     //SETTINGS IN THE NIB FILE***
@@ -215,32 +222,32 @@ static UITextField *selectedTextField = nil;
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"groupType"];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.partTypeTextField]) {
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"partType"];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.materialClassTextField]) {
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"materialClass"];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.sizeOneTextField] || [textField isEqual:self.sizeTwoTextField] || [textField isEqual:self.sizeThreeTextField]) {
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"size"];
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
     } else if([textField isEqual:self.endTypeOneTextField] || [textField isEqual:self.endTypeTwoTextField] || [textField isEqual:self.endTypeThreeTextField]){
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"endType"];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.manufacturerTextField]) {
         self.selectionTermsForPicker = self.selectionTermsDictionary[@"manufacturer"];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
-        currentSelection = self.selectionTermsForPicker[0];
+        //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.generalSearchTextField]) {
         //selected the general search, this is a normal textfield without a picker, so do not set the inputview to this picker
         self.selectionTermsPicker.delegate = nil;
@@ -277,10 +284,6 @@ static UITextField *selectedTextField = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    //initialize the dictionary of terms
-    [self initializeSelectionTermsDictionary];
     
     //initialize text field delegates to self
     self.generalSearchTextField.delegate = self;
@@ -328,19 +331,34 @@ static UITextField *selectedTextField = nil;
 - (void)initializeSelectionTermsDictionary
 {
     //Arrays of type terms and size selections
-    NSArray *groupTypes = @[@"", @"Mechanical Purchased Part", @"Supports & Support Hardware Purchased Part", @"Piping Hardware & Gaskets", @"Equipment, Valves, Specials, Engineered Items"];
-    NSArray *partTypes = @[@"", @"Connector", @"Elbow, 90", @"Tee, Equal", @"Tube, Seamless", @"Elbow, 90 Long Radius", @"Cap", @"Adapter", @"Adapter, Male", @"Adapter, Female", @"Coupling"];
-    NSArray *materialClasses = @[@"", @"PFA", @"Polyethylene, 150 lb", @"Carbon Steel, PTFE Lined 150 lb", @"Polypropylene, 150 lb", @"PVC Sch 40 Clear", @"PVC Sch 80", @"PVDF HP, PN 16", @"SS 304LSch 10", @"SS 316L Sch 10", @"SS 316L 10 Ra Max/EP"];
-    NSArray *sizes = @[@"", @"0.25\" (1/4)", @"0.5\" (1/2)", @"0.75\"(3/4)", @"1.25\"(1 1/4)", @"1.5\" (1 1/2)", @"2\"", @"4\"", @"12\"", @"20 mm", @"110 mm"];
-    NSArray *endTypes = @[@"", @"MPT", @"Flare", @"Socket Fusion", @"Butt Fusion", @"Spigot", @"Socketweld", @"Flanged, Raised Face", @"Flanged, Flat Face", @"Socket Cement", @"FPT"];
-    NSArray *manufacturerTypes = @[@"", @"George Fischer", @"Charlotte", @"Allied EG", @"Asahi", @"Valex", @"Cardinal UHP", @"Swagelok"];
+    NSMutableArray *groupTypes = [[NSMutableArray alloc] init];
+    [groupTypes addObject:@""];
+    [groupTypes addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"group"]];
+    NSMutableArray *partTypes = [[NSMutableArray alloc] init];
+    [partTypes addObject:@""];
+    [partTypes addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"part"]];
+    NSMutableArray *materialClasses = [[NSMutableArray alloc] init];
+    [materialClasses addObject:@""];
+    [materialClasses addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"class"]];
+    NSMutableArray *sizes = [[NSMutableArray alloc] init];
+    [sizes addObject:@""];
+    [sizes addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"size"]];
+    NSMutableArray *endTypes = [[NSMutableArray alloc] init];
+    [endTypes addObject:@""];
+    [endTypes addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"end"]];
+    NSMutableArray *manufacturerTypes = [[NSMutableArray alloc] init];
+    [manufacturerTypes addObject:@""];
+    [manufacturerTypes addObjectsFromArray:[[TFSConfigurationData configDictionary] getConfigDataForKey:@"mfg"]];
     
     NSArray *objects = [[NSArray alloc] initWithObjects:groupTypes,partTypes,materialClasses,sizes,endTypes,manufacturerTypes, nil];
     
     NSArray *keys = @[@"groupType", @"partType", @"materialClass", @"size", @"endType", @"manufacturer"];
     
     //initialize the dictionary of terms based on the above arrays
-    self.selectionTermsDictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+   self.selectionTermsDictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+    
+    //clear memory in the configuration data object
+    [[TFSConfigurationData configDictionary] resetConfigData];
     
 }
 
@@ -395,41 +413,96 @@ static UITextField *selectedTextField = nil;
 - (IBAction)searchButtonPressed:(id)sender
 {
     
-    BOOL dataLoaded = NO;
+    
+    if([self textFieldsNotEmpty]) {
     //first, initialize the request string with the given text fields
     //string is of format [token]:[general text field]:[sizes]:[group]:[part type]:[material class]:[end types]:[manufacturer]
-    NSString *tokenString = @"0000000000";
-    NSString *generalSearch = self.generalSearchTextField.text;
-    NSString *sizes = [NSString stringWithFormat:@"%@-%@-%@",self.sizeOneTextField.text,self.sizeTwoTextField.text,self.sizeThreeTextField.text];
-    sizes = [self removeIllegalCharacters:sizes];
-    NSString *group = self.groupTypeTextField.text;
-    NSString *partType = self.partTypeTextField.text;
-    NSString *materialClass = self.materialClassTextField.text;
-    NSString *endTypes = [NSString stringWithFormat:@"%@-%@-%@", self.endTypeOneTextField.text, self.endTypeTwoTextField.text, self.endTypeThreeTextField.text];
-    NSString *manufacturer = self.manufacturerTextField.text;
-    self.searchRequestString = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@:%@:%@",tokenString,generalSearch,sizes,group,partType,materialClass,endTypes,manufacturer];
+        NSString *tokenString = @"0000000000";
+        NSString *generalSearch = self.generalSearchTextField.text;
+        NSString *sizes = [NSString stringWithFormat:@"%@|%@|%@",self.sizeOneTextField.text,self.sizeTwoTextField.text,self.sizeThreeTextField.text];
+        sizes = [self removeIllegalCharacters:sizes];
+        NSString *group = self.groupTypeTextField.text;
+        NSString *partType = self.partTypeTextField.text;
+        NSString *materialClass = self.materialClassTextField.text;
+        NSString *endTypes = [NSString stringWithFormat:@"%@|%@|%@", self.endTypeOneTextField.text, self.endTypeTwoTextField.text, self.endTypeThreeTextField.text];
+        NSString *manufacturer = self.manufacturerTextField.text;
+        self.searchRequestString = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@:%@:%@",tokenString,generalSearch,sizes,group,partType,materialClass,endTypes,manufacturer];
+        //now send the request and get the json document, here I am using the NSNotificationCenter to allow the dataRequest
+        //to signal the search page when the data has finished loading. When it has loaded, I then call upon the selector
+        //presentResultsViewController to push to the navigation controller the results view
+        TFSServerRequest *dataRequest = [[TFSServerRequest alloc] initWithRequestString:self.searchRequestString withRequestType:TFSServerPartDataRequest];
     
-    //now send the request and get the json document, passing a reference to the table of results so async_dispatch can
-    //refresh the table's view when data is loaded
-    TFSPartDataRequest *dataRequest = [[TFSPartDataRequest alloc] initWithRequestString:self.searchRequestString withSignal:(BOOL *)&dataLoaded];
-    [dataRequest sendRequest];
     
-    //waiting for dataRequest to finish ***TEMPORARY***
-    while(!dataLoaded) ;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentResultsViewController) name:@"Part Data Received" object:dataRequest];
+        
+        if(self.searchDataAlertView)self.searchDataAlertView = nil;
     
-    //get the search text string from the text fields
-    self.searchRequestString = [[NSString alloc] initWithFormat:@"Search Results For:\n%@",self.generalSearchTextField.text];
+        self.searchDataAlertView = [[UIAlertView alloc] initWithTitle:@"Searching..." message:@"Searching for part data..." delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        
+        //initialize the frame of the alert view
+        
+        CGFloat alertViewSizeX = self.view.frame.size.width / 2.0;
+        CGFloat alertViewSizeY = self.view.frame.size.height / 2.0;
+        self.searchDataAlertView.frame = CGRectMake(self.view.frame.size.width / 4.0, self.view.frame.size.height / 4.0, alertViewSizeX, alertViewSizeY);
+        
+        [self.searchDataAlertView show];
+
+        [dataRequest sendRequest];
+    } else {
+        //if the user didn't enter anything, present an alert view that informs them they need to enter at least one search term to continue
+        [self enterSearchTermAlert];
+    }
+    
+}
+
+//method to determine if all the text fields are empty
+- (BOOL)textFieldsNotEmpty
+{
+    return (self.generalSearchTextField.text.length > 0 || self.groupTypeTextField.text.length > 0 || self.partTypeTextField.text.length > 0 || self.materialClassTextField.text.length > 0 || self.sizeOneTextField.text.length > 0 || self.sizeTwoTextField.text.length > 0 || self.sizeThreeTextField.text.length > 0 || self.endTypeOneTextField.text.length > 0 || self.endTypeTwoTextField.text.length > 0 || self.endTypeThreeTextField.text.length > 0 || self.manufacturerTextField.text.length > 0);
+}
+
+
+//method to display an alert view informing the user that they need to enter at least one search term for the search
+- (void)enterSearchTermAlert
+{
+    if(self.searchDataAlertView) self.searchDataAlertView = nil;
+    self.searchDataAlertView = [[UIAlertView alloc] initWithTitle:@"Search Error" message:@"Please enter at least one term" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    
+    //set the alertview's frame to be half the width of the this view and half of the height of this view, and put it in the center of the view
+    CGFloat alertViewSizeX = self.view.frame.size.width / 2.0;
+    CGFloat alertViewSizeY = self.view.frame.size.height / 2.0;
+    self.searchDataAlertView.frame = CGRectMake(self.view.frame.size.width / 4.0, self.view.frame.size.height / 4.0, alertViewSizeX, alertViewSizeY);
+    
+    [self.searchDataAlertView show];
+    
+}
+
+//selector for pushing the results view onto the navigation controller
+- (void)presentResultsViewController
+{
+    
+    //get the search text string from the text fields. if there is not general search text field entered, then the string to show on the top of the results view will be "Custom Search"
+    self.searchRequestString = [[NSString alloc] initWithFormat:@"Search Results For: %@",self.generalSearchTextField.text.length > 0 ? self.generalSearchTextField.text : @"Custom Search"];
     //create a part results view controller, and set its search text property
     self.searchResultsViewController = [[TFSPartResultsViewController alloc] init];
+    //set the search results view controller's navigation item label (at the top of the screen) and the string that the view controller sends as an email (template)
     [self.searchResultsViewController setNavigationItemLabel:self.searchRequestString];
+    //Initialize the size field string for email request
+    NSString *sizeField = [NSString stringWithFormat:@"\tSize 1: %@\n\tSize 2: %@\n\tSize 3:%@\n", self.sizeOneTextField.text ? self.sizeOneTextField.text : @"NA", self.sizeTwoTextField.text ? self.sizeTwoTextField.text : @"NA", self.sizeThreeTextField.text ? self.sizeThreeTextField.text : @"NA"];
+    //Initialize the end type field string for email request
+    NSString *endTypeField = [NSString stringWithFormat:@"\tEnd Type 1: %@\n\tEnd Type 2: %@\n\tEnd Type 3:%@\n", self.endTypeOneTextField.text ? self.endTypeOneTextField.text : @"NA", self.endTypeTwoTextField.text ? self.endTypeTwoTextField.text : @"NA", self.endTypeThreeTextField.text ? self.endTypeThreeTextField.text : @"NA"];
+    self.searchResultsViewController.emailRequestString = [NSString stringWithFormat:@"----BEGIN PART REQUEST----\nDESCRIPTION: %@\nGROUP: %@\nPART TYPE: %@\nMATERIAL: %@\nSIZES: \n%@\nEND TYPES: \n%@\nMANUFACTURER: %@\n---- END PART REQUEST ----\n",self.generalSearchTextField.text ? self.generalSearchTextField.text : @"NA",self.groupTypeTextField.text ? self.groupTypeTextField.text : @"NA", self.partTypeTextField.text ? self.partTypeTextField.text : @"NA", self.materialClassTextField.text ? self.materialClassTextField.text : @"NA", sizeField, endTypeField, self.manufacturerTextField.text ? self.manufacturerTextField.text : @"NA"];
     
-    //push this view controller onto the navigation controller of this view
+    //dismiss the alert view for searching
+    [self.searchDataAlertView dismissWithClickedButtonIndex:-1 animated:YES];
+    //push search results view controller onto the navigation controller of this view
     UINavigationController *navigationController = [self navigationController];
     if(navigationController) {
         [navigationController pushViewController:self.searchResultsViewController animated:YES];
     }
     
     self.searchRequestString = nil;
+    
 }
 
 -(NSString *)removeIllegalCharacters:(NSString *)target

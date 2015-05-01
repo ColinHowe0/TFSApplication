@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "TFSPartResultsViewController.h"
 
-@interface TFSPartDataRequest : NSObject <NSURLSessionDelegate>
+@interface TFSServerRequest : NSObject <NSURLSessionDelegate>
+
+typedef NS_ENUM(NSUInteger, TFSServerRequestType) {
+    TFSServerConfigRequest,
+    TFSServerPartDataRequest
+};
 
 //designated initializer with request string argument
-- (instancetype)initWithRequestString:(NSString *)requestString withSignal:(BOOL *)signal;
+- (instancetype)initWithRequestString:(NSString *)requestString withRequestType:(TFSServerRequestType)requestType;
 
 //send request and get data
 - (void)sendRequest;

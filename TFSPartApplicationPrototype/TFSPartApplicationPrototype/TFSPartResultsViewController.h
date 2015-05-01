@@ -7,10 +7,12 @@
 //  Author: Colin Howe
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface TFSPartResultsViewController : UITableViewController <UITableViewDelegate>
+@interface TFSPartResultsViewController : UITableViewController <UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic) NSInteger numParts;
+@property (nonatomic) NSString *emailRequestString;
 
 //method for setting the navigation item's label text
 - (void)setNavigationItemLabel:(NSString *)labelText;

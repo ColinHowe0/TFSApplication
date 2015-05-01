@@ -46,7 +46,6 @@
 //prepare the view by populating the labels with appropriate data
 - (void)viewWillAppear:(BOOL)animated
 {
-    int numLines = 1;
     [super viewWillAppear:animated];
     
     TFSPart *part = self.part;
@@ -54,40 +53,88 @@
     self.numberLabel.text = part.partNumber;
     self.nameLabel.text = part.partName;
     self.groupLabel.text = part.partGroupType;
+    self.typeLabel.text = part.partType;
     
     NSMutableString *sizeString = [[NSMutableString alloc] init];
-    //initialize the size label by appending size strings
-    for (NSString *size in part.partSizes) {
-        NSString *appendString = [NSString stringWithFormat:@"%@\n",size];
-        [sizeString appendString:appendString];
-        numLines++;
+    //initialize the size label by appending size strings, if the number of strings in the array is greater than one
+    if([part.partSizes count] > 1) {
+        for (int i = 0; i < [part.partSizes count] - 1; i++) {
+            //if string in the part sizes array and is not "NA" (not null) and the next element in the array is not "NA".
+            if(![part.partSizes[i] isEqualToString:@"NA"] && ![part.partSizes[i+1] isEqualToString:@"NA"]) {
+                NSString *appendString = [NSString stringWithFormat:@"%@ X ", part.partSizes[i]];
+                [sizeString appendString:appendString];
+            } else if(![part.partSizes[i] isEqualToString:@"NA"] && [part.partSizes[i+1] isEqualToString:@"NA"]) {
+                //if the string in the part sizes array is not "NA", but the next string is, then append to the string the last size and break the loop, since we assume that the rest of the sizes are not initialized either
+                NSString *appendString = [NSString stringWithFormat:@"%@ ", part.partSizes[i]];
+                [sizeString appendString:appendString];
+                break;
+            } else {
+                //string at the index was "NA", so break and append nothing to the printed string
+                break;
+            }
+        
+        }
     }
-    self.sizesLabel.numberOfLines = numLines;
+    //if the last element in the array is not NA, then append it to the string
+    if(![part.partSizes[[part.partSizes count] - 1] isEqualToString:@"NA"]) {
+        NSString *appendString = [NSString stringWithFormat:@"%@", part.partSizes[[part.partSizes count] - 1]];
+        [sizeString appendString:appendString];
+    }
+    //self.sizesLabel.numberOfLines = numLines;
     self.sizesLabel.text = sizeString;
     self.classLabel.text = part.partClass;
     
-    numLines = 1;
+    //numLines = 1;
     //initialize the end types label by appending end type strings
     NSMutableString *endTypeString = [[NSMutableString alloc] init];
-    for(NSString *endType in part.partEndTypes) {
-        NSString *appendString = [NSString stringWithFormat:@"%@\n",endType];
-        [endTypeString appendString:appendString];
-        numLines++;
+    //this loop uses the same logic as the loop above for the sizes, except for the string it prints of course
+    if([part.partEndTypes count] > 1) {
+        for(int i = 0; i < [part.partEndTypes count] - 1; i++) {
+            if(![part.partEndTypes[i] isEqualToString:@"NA"] && ![part.partEndTypes[i+1] isEqualToString:@"NA"]) {
+                NSString *appendString = [NSString stringWithFormat:@"%@, ", part.partEndTypes[i]];
+                [endTypeString appendString:appendString];
+            } else if(![part.partEndTypes[i] isEqualToString:@"NA"] && [part.partEndTypes[i+1] isEqualToString:@"NA"]) {
+                NSString *appendString = [NSString stringWithFormat:@"%@", part.partEndTypes[i]];
+                [endTypeString appendString:appendString];
+                break;
+            } else {
+                break;
+            }
+        }
     }
     
-    self.endTypesLabel.numberOfLines = numLines;
+    if(![part.partEndTypes[[part.partEndTypes count] - 1] isEqualToString:@"NA"]) {
+        NSString *appendString = [NSString stringWithFormat:@"%@", part.partEndTypes[[part.partEndTypes count] - 1]];
+        [endTypeString appendString:appendString];
+    }
+    
+    //self.endTypesLabel.numberOfLines = numLines;
     self.endTypesLabel.text = endTypeString;
     
-    numLines = 1;
+    //numLines = 1;
     //initialize manufacturer's label in the same manner as above
     NSMutableString *manufacturersString = [[NSMutableString alloc] init];
-    for(NSString *manufacturer in part.partManufacturers) {
-        NSString *appendString = [NSString stringWithFormat:@"%@\n",manufacturer];
-        [manufacturersString appendString:appendString];
-        numLines++;
+    if([part.partManufacturers count] > 1) {
+        for(int i = 0; i < [part.partManufacturers count] - 1; i++) {
+            if(![part.partManufacturers[i] isEqualToString:@"NA - NA"] && ![part.partManufacturers[i+1] isEqualToString:@"NA - NA"]) {
+                NSString *appendString = [NSString stringWithFormat:@"%@  ", part.partManufacturers[i]];
+                [manufacturersString appendString:appendString];
+            } else if(![part.partManufacturers[i] isEqualToString:@"NA - NA"] && [part.partManufacturers[i+1] isEqualToString:@"NA - NA"]) {
+                NSString *appendString = [NSString stringWithFormat:@"%@", part.partManufacturers[i]];
+                [manufacturersString appendString:appendString];
+                break;
+            } else {
+                break;
+            }
+        }
     }
     
-    self.manufacturersLabel.numberOfLines = numLines;
+    if(![part.partManufacturers[[part.partManufacturers count] -1] isEqualToString:@"NA - NA"]) {
+        NSString *appendString = [NSString stringWithFormat:@"%@", part.partManufacturers[[part.partManufacturers count] -1]];
+        [manufacturersString appendString:appendString];
+    }
+
+    //self.manufacturersLabel.numberOfLines = numLines;
     self.manufacturersLabel.text = manufacturersString;
 }
 
@@ -96,6 +143,7 @@
 - (void)viewPartImage
 {
     TFSImageStore *images = [TFSImageStore images];
+    //create an view controller which will contain a UIImageView
     UIViewController *imageViewController = [[UIViewController alloc] init];
     
     imageViewController.view.backgroundColor = [UIColor blackColor];
@@ -114,8 +162,8 @@
     navBar.items = @[navItem];
     [imageViewController.view addSubview:navBar];
     
-    //Image view
-    UIImageView *partImageView = [[UIImageView alloc] initWithFrame:imageViewController.view.frame];
+    //Image view with a frame that has 90% the height and width of the imageViewController that contains it
+    UIImageView *partImageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewController.view.frame.size.width * 0.05, imageViewController.view.frame.size.height * 0.05,imageViewController.view.frame.size.width * 0.9, imageViewController.view.frame.size.height * 0.9)];
     partImageView.contentMode = UIViewContentModeScaleAspectFit;
     partImageView.image = [images imageForKey:self.part.imageName];
     

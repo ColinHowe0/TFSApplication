@@ -19,23 +19,21 @@
 		A0106B8E1AC4AC5000C7FDFC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0106B761AC4AC4F00C7FDFC /* UIKit.framework */; };
 		A0106B961AC4AC5000C7FDFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0106B941AC4AC5000C7FDFC /* InfoPlist.strings */; };
 		A0106B981AC4AC5000C7FDFC /* TFSPartApplicationPrototypeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0106B971AC4AC5000C7FDFC /* TFSPartApplicationPrototypeTests.m */; };
-		A0A71A191AE19FBA009A4C83 /* TFSPartDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A71A181AE19FBA009A4C83 /* TFSPartDataRequest.m */; };
 		A0FBFED81ACA7D7D002D38A5 /* TFSPart.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFED71ACA7D7D002D38A5 /* TFSPart.m */; };
 		A0FBFEDE1ACA8BDF002D38A5 /* TFSPartStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFEDD1ACA8BDF002D38A5 /* TFSPartStore.m */; };
 		A0FBFEE11ACA92D5002D38A5 /* TFSPartResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFEE01ACA92D5002D38A5 /* TFSPartResultsViewController.m */; };
 		A0FBFEEA1ACA9998002D38A5 /* SS-4-VCR-A1S-400.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE21ACA9998002D38A5 /* SS-4-VCR-A1S-400.jpg */; };
-		A0FBFEEB1ACA9998002D38A5 /* SS-8-VCR-3-8TA.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE31ACA9998002D38A5 /* SS-8-VCR-3-8TA.jpg */; };
-		A0FBFEEC1ACA9998002D38A5 /* SS-8-VCR-6-810.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE41ACA9998002D38A5 /* SS-8-VCR-6-810.jpg */; };
-		A0FBFEED1ACA9998002D38A5 /* SS-8-VCR-61.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE51ACA9998002D38A5 /* SS-8-VCR-61.jpg */; };
-		A0FBFEEE1ACA9998002D38A5 /* SS-8-VCR-CP.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE61ACA9998002D38A5 /* SS-8-VCR-CP.jpg */; };
-		A0FBFEEF1ACA9998002D38A5 /* SS-8-WVCR-1-8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE71ACA9998002D38A5 /* SS-8-WVCR-1-8.jpg */; };
-		A0FBFEF01ACA9998002D38A5 /* SS-8-WVCR-6-810.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE81ACA9998002D38A5 /* SS-8-WVCR-6-810.jpg */; };
-		A0FBFEF11ACA9998002D38A5 /* SS-8-WVCR-7-8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFEE91ACA9998002D38A5 /* SS-8-WVCR-7-8.jpg */; };
 		A0FBFEF91ACAAAEB002D38A5 /* TFSImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFEF81ACAAAEB002D38A5 /* TFSImageStore.m */; };
 		A0FBFF051ACAAF2C002D38A5 /* TFSPartDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFF031ACAAF2C002D38A5 /* TFSPartDetailsViewController.m */; };
 		A0FBFF061ACAAF2C002D38A5 /* TFSPartDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFF041ACAAF2C002D38A5 /* TFSPartDetailsViewController.xib */; };
 		A0FBFF141ACAEDE5002D38A5 /* TFSSearchPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFF121ACAEDE5002D38A5 /* TFSSearchPageViewController.m */; };
 		A0FBFF151ACAEDE5002D38A5 /* TFSSearchPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFF131ACAEDE5002D38A5 /* TFSSearchPageViewController.xib */; };
+		CEDB92511AED3D1100E84B85 /* TFSServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */; };
+		CEDB92541AED43D000E84B85 /* TFSConfigurationData.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDB92531AED43D000E84B85 /* TFSConfigurationData.m */; };
+		CEDB925D1AEF37C100E84B85 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDB925C1AEF37C100E84B85 /* MessageUI.framework */; };
+		CEE262501AF00B6900477A73 /* TFSApplicationLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2624E1AF00B6900477A73 /* TFSApplicationLoadingScreen.m */; };
+		CEE262511AF00B6900477A73 /* TFSApplicationLoadingScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE2624F1AF00B6900477A73 /* TFSApplicationLoadingScreen.xib */; };
+		CEE262531AF00B9600477A73 /* Total Facility Solutions.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE262521AF00B9600477A73 /* Total Facility Solutions.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +63,6 @@
 		A0106B931AC4AC5000C7FDFC /* TFSPartApplicationPrototypeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TFSPartApplicationPrototypeTests-Info.plist"; sourceTree = "<group>"; };
 		A0106B951AC4AC5000C7FDFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0106B971AC4AC5000C7FDFC /* TFSPartApplicationPrototypeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFSPartApplicationPrototypeTests.m; sourceTree = "<group>"; };
-		A0A71A171AE19FBA009A4C83 /* TFSPartDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSPartDataRequest.h; sourceTree = "<group>"; };
-		A0A71A181AE19FBA009A4C83 /* TFSPartDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSPartDataRequest.m; sourceTree = "<group>"; };
 		A0FBFED61ACA7D7D002D38A5 /* TFSPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSPart.h; sourceTree = "<group>"; };
 		A0FBFED71ACA7D7D002D38A5 /* TFSPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSPart.m; sourceTree = "<group>"; };
 		A0FBFEDC1ACA8BDF002D38A5 /* TFSPartStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSPartStore.h; sourceTree = "<group>"; };
@@ -74,13 +70,6 @@
 		A0FBFEDF1ACA92D5002D38A5 /* TFSPartResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSPartResultsViewController.h; sourceTree = "<group>"; };
 		A0FBFEE01ACA92D5002D38A5 /* TFSPartResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSPartResultsViewController.m; sourceTree = "<group>"; };
 		A0FBFEE21ACA9998002D38A5 /* SS-4-VCR-A1S-400.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-4-VCR-A1S-400.jpg"; sourceTree = "<group>"; };
-		A0FBFEE31ACA9998002D38A5 /* SS-8-VCR-3-8TA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-VCR-3-8TA.jpg"; sourceTree = "<group>"; };
-		A0FBFEE41ACA9998002D38A5 /* SS-8-VCR-6-810.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-VCR-6-810.jpg"; sourceTree = "<group>"; };
-		A0FBFEE51ACA9998002D38A5 /* SS-8-VCR-61.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-VCR-61.jpg"; sourceTree = "<group>"; };
-		A0FBFEE61ACA9998002D38A5 /* SS-8-VCR-CP.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-VCR-CP.jpg"; sourceTree = "<group>"; };
-		A0FBFEE71ACA9998002D38A5 /* SS-8-WVCR-1-8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-WVCR-1-8.jpg"; sourceTree = "<group>"; };
-		A0FBFEE81ACA9998002D38A5 /* SS-8-WVCR-6-810.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-WVCR-6-810.jpg"; sourceTree = "<group>"; };
-		A0FBFEE91ACA9998002D38A5 /* SS-8-WVCR-7-8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SS-8-WVCR-7-8.jpg"; sourceTree = "<group>"; };
 		A0FBFEF71ACAAAEB002D38A5 /* TFSImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSImageStore.h; sourceTree = "<group>"; };
 		A0FBFEF81ACAAAEB002D38A5 /* TFSImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSImageStore.m; sourceTree = "<group>"; };
 		A0FBFF021ACAAF2C002D38A5 /* TFSPartDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFSPartDetailsViewController.h; path = ../TFSPartDetailsViewController.h; sourceTree = "<group>"; };
@@ -89,6 +78,15 @@
 		A0FBFF111ACAEDE5002D38A5 /* TFSSearchPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSSearchPageViewController.h; sourceTree = "<group>"; };
 		A0FBFF121ACAEDE5002D38A5 /* TFSSearchPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSSearchPageViewController.m; sourceTree = "<group>"; };
 		A0FBFF131ACAEDE5002D38A5 /* TFSSearchPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TFSSearchPageViewController.xib; sourceTree = "<group>"; };
+		CEDB924F1AED3D1100E84B85 /* TFSServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSServerRequest.h; sourceTree = "<group>"; };
+		CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSServerRequest.m; sourceTree = "<group>"; };
+		CEDB92521AED43D000E84B85 /* TFSConfigurationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSConfigurationData.h; sourceTree = "<group>"; };
+		CEDB92531AED43D000E84B85 /* TFSConfigurationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSConfigurationData.m; sourceTree = "<group>"; };
+		CEDB925C1AEF37C100E84B85 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		CEE2624D1AF00B6900477A73 /* TFSApplicationLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSApplicationLoadingScreen.h; sourceTree = "<group>"; };
+		CEE2624E1AF00B6900477A73 /* TFSApplicationLoadingScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSApplicationLoadingScreen.m; sourceTree = "<group>"; };
+		CEE2624F1AF00B6900477A73 /* TFSApplicationLoadingScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TFSApplicationLoadingScreen.xib; sourceTree = "<group>"; };
+		CEE262521AF00B9600477A73 /* Total Facility Solutions.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Total Facility Solutions.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEDB925D1AEF37C100E84B85 /* MessageUI.framework in Frameworks */,
 				A0106B751AC4AC4F00C7FDFC /* CoreGraphics.framework in Frameworks */,
 				A0106B771AC4AC4F00C7FDFC /* UIKit.framework in Frameworks */,
 				A0106B731AC4AC4F00C7FDFC /* Foundation.framework in Frameworks */,
@@ -137,6 +136,7 @@
 		A0106B711AC4AC4F00C7FDFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEDB925C1AEF37C100E84B85 /* MessageUI.framework */,
 				A0106B721AC4AC4F00C7FDFC /* Foundation.framework */,
 				A0106B741AC4AC4F00C7FDFC /* CoreGraphics.framework */,
 				A0106B761AC4AC4F00C7FDFC /* UIKit.framework */,
@@ -162,12 +162,17 @@
 				A0FBFED71ACA7D7D002D38A5 /* TFSPart.m */,
 				A0FBFEDF1ACA92D5002D38A5 /* TFSPartResultsViewController.h */,
 				A0FBFEE01ACA92D5002D38A5 /* TFSPartResultsViewController.m */,
+				CEE2624D1AF00B6900477A73 /* TFSApplicationLoadingScreen.h */,
+				CEE2624E1AF00B6900477A73 /* TFSApplicationLoadingScreen.m */,
+				CEE2624F1AF00B6900477A73 /* TFSApplicationLoadingScreen.xib */,
 				A0106B811AC4AC4F00C7FDFC /* TFSAppDelegate.h */,
 				A0106B821AC4AC4F00C7FDFC /* TFSAppDelegate.m */,
 				A0106B841AC4AC4F00C7FDFC /* Images.xcassets */,
 				A0106B791AC4AC4F00C7FDFC /* Supporting Files */,
-				A0A71A171AE19FBA009A4C83 /* TFSPartDataRequest.h */,
-				A0A71A181AE19FBA009A4C83 /* TFSPartDataRequest.m */,
+				CEDB924F1AED3D1100E84B85 /* TFSServerRequest.h */,
+				CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */,
+				CEDB92521AED43D000E84B85 /* TFSConfigurationData.h */,
+				CEDB92531AED43D000E84B85 /* TFSConfigurationData.m */,
 			);
 			path = TFSPartApplicationPrototype;
 			sourceTree = "<group>";
@@ -175,14 +180,8 @@
 		A0106B791AC4AC4F00C7FDFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEE262521AF00B9600477A73 /* Total Facility Solutions.jpg */,
 				A0FBFEE21ACA9998002D38A5 /* SS-4-VCR-A1S-400.jpg */,
-				A0FBFEE31ACA9998002D38A5 /* SS-8-VCR-3-8TA.jpg */,
-				A0FBFEE41ACA9998002D38A5 /* SS-8-VCR-6-810.jpg */,
-				A0FBFEE51ACA9998002D38A5 /* SS-8-VCR-61.jpg */,
-				A0FBFEE61ACA9998002D38A5 /* SS-8-VCR-CP.jpg */,
-				A0FBFEE71ACA9998002D38A5 /* SS-8-WVCR-1-8.jpg */,
-				A0FBFEE81ACA9998002D38A5 /* SS-8-WVCR-6-810.jpg */,
-				A0FBFEE91ACA9998002D38A5 /* SS-8-WVCR-7-8.jpg */,
 				A0106B7A1AC4AC4F00C7FDFC /* TFSPartApplicationPrototype-Info.plist */,
 				A0106B7B1AC4AC4F00C7FDFC /* InfoPlist.strings */,
 				A0106B7E1AC4AC4F00C7FDFC /* main.m */,
@@ -288,18 +287,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0FBFEF01ACA9998002D38A5 /* SS-8-WVCR-6-810.jpg in Resources */,
-				A0FBFEF11ACA9998002D38A5 /* SS-8-WVCR-7-8.jpg in Resources */,
 				A0106B7D1AC4AC4F00C7FDFC /* InfoPlist.strings in Resources */,
 				A0106B851AC4AC4F00C7FDFC /* Images.xcassets in Resources */,
-				A0FBFEEE1ACA9998002D38A5 /* SS-8-VCR-CP.jpg in Resources */,
-				A0FBFEEB1ACA9998002D38A5 /* SS-8-VCR-3-8TA.jpg in Resources */,
-				A0FBFEED1ACA9998002D38A5 /* SS-8-VCR-61.jpg in Resources */,
 				A0FBFF061ACAAF2C002D38A5 /* TFSPartDetailsViewController.xib in Resources */,
-				A0FBFEEF1ACA9998002D38A5 /* SS-8-WVCR-1-8.jpg in Resources */,
+				CEE262531AF00B9600477A73 /* Total Facility Solutions.jpg in Resources */,
 				A0FBFF151ACAEDE5002D38A5 /* TFSSearchPageViewController.xib in Resources */,
-				A0FBFEEC1ACA9998002D38A5 /* SS-8-VCR-6-810.jpg in Resources */,
 				A0FBFEEA1ACA9998002D38A5 /* SS-4-VCR-A1S-400.jpg in Resources */,
+				CEE262511AF00B6900477A73 /* TFSApplicationLoadingScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,13 +314,15 @@
 			files = (
 				A0106B831AC4AC4F00C7FDFC /* TFSAppDelegate.m in Sources */,
 				A0FBFED81ACA7D7D002D38A5 /* TFSPart.m in Sources */,
+				CEDB92511AED3D1100E84B85 /* TFSServerRequest.m in Sources */,
 				A0FBFF051ACAAF2C002D38A5 /* TFSPartDetailsViewController.m in Sources */,
 				A0FBFEDE1ACA8BDF002D38A5 /* TFSPartStore.m in Sources */,
 				A0FBFEF91ACAAAEB002D38A5 /* TFSImageStore.m in Sources */,
+				CEDB92541AED43D000E84B85 /* TFSConfigurationData.m in Sources */,
 				A0106B7F1AC4AC4F00C7FDFC /* main.m in Sources */,
 				A0FBFF141ACAEDE5002D38A5 /* TFSSearchPageViewController.m in Sources */,
-				A0A71A191AE19FBA009A4C83 /* TFSPartDataRequest.m in Sources */,
 				A0FBFEE11ACA92D5002D38A5 /* TFSPartResultsViewController.m in Sources */,
+				CEE262501AF00B6900477A73 /* TFSApplicationLoadingScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -433,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

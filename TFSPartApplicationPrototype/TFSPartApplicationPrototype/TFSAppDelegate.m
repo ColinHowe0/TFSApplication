@@ -9,6 +9,7 @@
 #import "TFSAppDelegate.h"
 #import "TFSPartResultsViewController.h"
 #import "TFSSearchPageViewController.h"
+#import "TFSApplicationLoadingScreen.h"
 
 @implementation TFSAppDelegate
 
@@ -18,22 +19,25 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    //Results will be displayed through this TFSPartResultsViewController and its table view.
-    //TFSPartResultsViewController *resultsController = [[TFSPartResultsViewController alloc] init];
+    //first produce a notification object that will warn this application of when the configuration data has been loaded, then create the loading screen and show it. The selector continueWithApplication will create the navigation controller for use in the application and begin with the search screen.
+
     
-    //Search page view controller, initially root view controller until user presses search button, then results view controller is pushed onto the view
+    TFSApplicationLoadingScreen *loadingScreen = [[TFSApplicationLoadingScreen alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(continueWithApplication) name:@"Done Loading" object:loadingScreen];
+    self.window.rootViewController = loadingScreen;
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void)continueWithApplication
+{
+    //Search page view controller, initially root view controller until user presses search buton, then results view controller pushed onto the view
     TFSSearchPageViewController *searchPageController = [[TFSSearchPageViewController alloc] init];
     
-    //This is the primary navigation controller of the application. Setting search page as the root.
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:searchPageController];
-    
-    //Place navigation controller as the root
     self.window.rootViewController = navController;
-    
-    
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

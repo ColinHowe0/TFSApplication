@@ -37,7 +37,7 @@
 
 //Designated Initializer
 - (instancetype)initWithFields: (NSDictionary *)partCharacteristics;
-- (void)setThumbnailFromImage:(UIImage *)image;
+- (void)setThumbnailFromImage:(UIImage *)image withDimension:(CGRect)dimension;
 
 
 @end
