@@ -12,6 +12,9 @@
 #import "TFSPartStore.h"
 #import "TFSImageStore.h"
 #import "TFSConfigurationData.h"
+#import "TFSGradientView.h"
+#import "TFSPartDetailsViewController.h"
+#import "TFSPart.h"
 
 @interface TFSSearchPageViewController ()
 
@@ -33,6 +36,10 @@
 
 //the UIAlertView for when the application is getting the part data from the server
 @property (strong, nonatomic) UIAlertView *searchDataAlertView;
+//to prevent multiple gradient views from being drawin in the background over and over again, retain a reference to the current background gradient
+@property (strong, nonatomic) TFSGradientView *backgroundGradient;
+
+
 
 
 
@@ -48,6 +55,9 @@
 static NSString *currentSelection;
 //reference to a selectedTextField
 static UITextField *selectedTextField = nil;
+//bool to prevent multiple rapid presses of search button to send multiple requests and receive too many results
+static BOOL enableSearchButtonPress = YES;
+static BOOL buttonsSet = NO;
 
 
 
@@ -59,7 +69,7 @@ static UITextField *selectedTextField = nil;
     if(self) {
         //Further initialization
         NSLog(@"Intializing search page.\n");
-        self.view.backgroundColor = [UIColor blackColor];
+        self.view.backgroundColor = [UIColor clearColor];
         
         currentSelection = [[NSString alloc] init];
         
@@ -83,6 +93,12 @@ static UITextField *selectedTextField = nil;
     
     [[TFSPartStore parts] resetParts];
     [[TFSImageStore images] resetImages];
+    //set buttons if they haven't been set already (do once)
+    if(!buttonsSet) {
+        [self.searchButton makeButtonShiny:[UIColor redColor]];
+        [self.clearFieldsButton makeButtonShiny:[UIColor redColor]];
+        buttonsSet = YES;
+    }
     
 }
 
@@ -183,6 +199,26 @@ static UITextField *selectedTextField = nil;
     _manufacturerTextField.minimumFontSize = 14;
     _manufacturerTextField.adjustsFontSizeToFitWidth = YES;
     
+    //set the view's gradient color for improved appearance. NOTE: using CGGradient over
+    //CAGradientLayer produces a better image (less noticeable "stepping") but has a tremendous
+    //effect on performance, so I'm using CAGradientLayer here.
+    if(!self.backgroundGradient) {
+        TFSGradientView *viewGradient = [[TFSGradientView alloc] initWithFrame:self.view.bounds];
+        viewGradient.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        //dark gray color
+        UIColor *firstColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.0f alpha:1.0f];
+        //lighter gray color
+        UIColor *secondColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.3f alpha:1.0f];
+        viewGradient.layer.colors = [NSArray arrayWithObjects:(id)[firstColor CGColor], (id)[secondColor CGColor], (id)[firstColor CGColor], nil];
+        self.backgroundGradient = viewGradient;
+        [self.view addSubview:self.backgroundGradient];
+        [self.view sendSubviewToBack:self.backgroundGradient];
+    }
+    
+    //NSLog(@"Number of subviews: %@", [NSNumber numberWithInt:[[self.view subviews] count]]);
+    
+    
+    
 }
 
 //when the user selects a textfield, initialize the picker view with the appropriate terms, and set the user's selection
@@ -212,7 +248,7 @@ static UITextField *selectedTextField = nil;
     self.selectionTermsPicker.delegate = self;
     self.selectionTermsPicker.backgroundColor = [UIColor whiteColor];
     self.selectionTermsPicker.showsSelectionIndicator = YES;
-    [self.selectionTermsPicker addGestureRecognizer:self.pickerViewRecognizer];
+    //[self.selectionTermsPicker addGestureRecognizer:self.pickerViewRecognizer];
     
     //prepare selection Terms Picker's  gesture recognizer for its view
     selectedTextField = textField;
@@ -276,8 +312,10 @@ static UITextField *selectedTextField = nil;
         selectedTextField = nil;
     }
     //if there's a gesture recognizer, remove it so other text fields may be selected
+    /*
     for(UIGestureRecognizer *rec in [self.view gestureRecognizers])
         [self.view removeGestureRecognizer:rec];
+     */
 
 }
 
@@ -306,18 +344,11 @@ static UITextField *selectedTextField = nil;
     self.generalSearchTextField.secureTextEntry = NO;
     
     //set a gesture recognizer for a single tap in a picker view
+    /*
     self.pickerViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     self.pickerViewRecognizer.cancelsTouchesInView = NO;
     self.pickerViewRecognizer.numberOfTapsRequired = 1;
-    
-    
-    
-    
-    
-    
-    
-   
-
+     */
 }
 
 - (void)didReceiveMemoryWarning
@@ -414,9 +445,10 @@ static UITextField *selectedTextField = nil;
 {
     
     
-    if([self textFieldsNotEmpty]) {
+    if([self textFieldsNotEmpty] && enableSearchButtonPress) {
     //first, initialize the request string with the given text fields
     //string is of format [token]:[general text field]:[sizes]:[group]:[part type]:[material class]:[end types]:[manufacturer]
+        enableSearchButtonPress = NO;
         NSString *tokenString = @"0000000000";
         NSString *generalSearch = self.generalSearchTextField.text;
         NSString *sizes = [NSString stringWithFormat:@"%@|%@|%@",self.sizeOneTextField.text,self.sizeTwoTextField.text,self.sizeThreeTextField.text];
@@ -448,9 +480,11 @@ static UITextField *selectedTextField = nil;
         [self.searchDataAlertView show];
 
         [dataRequest sendRequest];
-    } else {
+    } else if(![self textFieldsNotEmpty]){
         //if the user didn't enter anything, present an alert view that informs them they need to enter at least one search term to continue
         [self enterSearchTermAlert];
+    } else {
+        ;
     }
     
 }
@@ -481,6 +515,7 @@ static UITextField *selectedTextField = nil;
 - (void)presentResultsViewController
 {
     
+    
     //get the search text string from the text fields. if there is not general search text field entered, then the string to show on the top of the results view will be "Custom Search"
     self.searchRequestString = [[NSString alloc] initWithFormat:@"Search Results For: %@",self.generalSearchTextField.text.length > 0 ? self.generalSearchTextField.text : @"Custom Search"];
     //create a part results view controller, and set its search text property
@@ -497,11 +532,18 @@ static UITextField *selectedTextField = nil;
     [self.searchDataAlertView dismissWithClickedButtonIndex:-1 animated:YES];
     //push search results view controller onto the navigation controller of this view
     UINavigationController *navigationController = [self navigationController];
-    if(navigationController) {
+    if(navigationController)
+    {
         [navigationController pushViewController:self.searchResultsViewController animated:YES];
+        if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            TFSPartDetailsViewController *dvc = [[TFSPartDetailsViewController alloc] init];
+            dvc.part = [[TFSPart alloc] initWithFields:@{}];
+            [self.searchResultsViewController setDetailViewController:dvc];
+        }
     }
     
     self.searchRequestString = nil;
+    enableSearchButtonPress = YES;
     
 }
 

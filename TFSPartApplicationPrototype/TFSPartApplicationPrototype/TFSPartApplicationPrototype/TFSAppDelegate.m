@@ -10,6 +10,8 @@
 #import "TFSPartResultsViewController.h"
 #import "TFSSearchPageViewController.h"
 #import "TFSApplicationLoadingScreen.h"
+#import "TFSPartDetailsViewController.h"
+#import "TFSPart.h"
 
 @implementation TFSAppDelegate
 
@@ -17,6 +19,8 @@
 {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //set the window's tint color to gray
+    [self.window setTintColor:[UIColor redColor]];
     // Override point for customization after application launch.
     
     //first produce a notification object that will warn this application of when the configuration data has been loaded, then create the loading screen and show it. The selector continueWithApplication will create the navigation controller for use in the application and begin with the search screen.
@@ -33,11 +37,34 @@
 - (void)continueWithApplication
 {
     //Search page view controller, initially root view controller until user presses search buton, then results view controller pushed onto the view
+    
     TFSSearchPageViewController *searchPageController = [[TFSSearchPageViewController alloc] init];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:searchPageController];
-    self.window.rootViewController = navController;
-    [self.window makeKeyAndVisible];
+    //if the app is running on an ipad, then push a detail view controller as well to a split view controller
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        UISplitViewController *svc = [[UISplitViewController alloc] init];
+        svc.preferredDisplayMode = UISplitViewControllerDisplayModeAutomatic;
+        svc.minimumPrimaryColumnWidth = self.window.frame.size.width / 2.0;
+        svc.maximumPrimaryColumnWidth = self.window.frame.size.width / 2.0;
+        [svc.view setBackgroundColor:[UIColor clearColor]];
+        //TFSPartDetailsViewController *dvc = [[TFSPartDetailsViewController alloc] init];
+        TFSApplicationLoadingScreen *otherScreen = [[TFSApplicationLoadingScreen alloc] init];
+        otherScreen.view.frame = CGRectMake(0, 0, self.window.frame.size.width / 2.0, self.window.frame.size.height);
+        UINavigationController *dvcNav = [[UINavigationController alloc] initWithRootViewController:otherScreen];
+        //initialize the dvc with an empty part
+        //dvc.part = [[TFSPart alloc] initWithFields:@{}];
+        svc.viewControllers = @[navController, dvcNav];
+        
+        self.window.rootViewController = svc;
+        [self.window makeKeyAndVisible];
+        
+    } else {
+        
+        self.window.rootViewController = navController;
+        [self.window makeKeyAndVisible];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
