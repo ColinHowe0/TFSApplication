@@ -7,6 +7,7 @@
 //  Author: Colin Howe
 
 #import <UIKit/UIKit.h>
+#import "TFSButton.h"
 
 @interface TFSSearchPageViewController : UIViewController <UIPickerViewDelegate, UITextFieldDelegate, UIPickerViewDataSource,UIGestureRecognizerDelegate>
 
@@ -20,8 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *sizeTwoTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endTypeOneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endTypeTwoTextField;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
-@property (weak, nonatomic) IBOutlet UIButton *clearFieldsButton;
+@property (weak, nonatomic) IBOutlet TFSButton *searchButton;
+@property (weak, nonatomic) IBOutlet TFSButton *clearFieldsButton;
 @property (weak, nonatomic) IBOutlet UITextField *manufacturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *sizeThreeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endTypeThreeTextField;

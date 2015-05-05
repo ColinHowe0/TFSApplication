@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSMutableURLRequest *request;
 //session object for transfer tasks
 @property (nonatomic, strong) NSURLSession *session;
+//session data task object, referenced for interruption if user cancels a search
+@property (nonatomic, strong) NSURLSessionDataTask *dataTask;
 
 @end
 
@@ -53,17 +55,34 @@ static TFSServerRequestType rt;
             self.serverURLAndQuery = [NSURL URLWithString:[NSString stringWithFormat:@"http://45.56.71.18:8080/SDServe/webresources/server/config"]];
         
         self.request = [NSMutableURLRequest requestWithURL:self.serverURLAndQuery];
+        
+        //notification for when the user cancels a search
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelCurrentDataTask) name:@"Cancel Server Request" object:nil];
     }
     
     return self;
 }
+
+//when the user presses cancel button in search page view, cancel the current data task and any information loaded into the imagestore and partstore objects
+- (void)cancelCurrentDataTask {
+    if(_dataTask) {
+        
+        NSLog(@"Cancelled the data tranfer.");
+        [_dataTask cancel];
+        
+    }
+    
+    [[TFSImageStore images] resetImages];
+    [[TFSPartStore parts] resetParts];
+}
+
 
 - (void)sendRequest
 {
     //get the data for the parts and the image data from a json
     if(rt == TFSServerPartDataRequest) {
         NSLog(@"%@ %@", @"Doing a data request at", self.serverURLAndQuery);
-        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:self.request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+         _dataTask = [self.session dataTaskWithRequest:self.request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             //parse json
             NSError *jsonError;
             if(!error) {
@@ -100,13 +119,13 @@ static TFSServerRequestType rt;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Part Data Received" object:self];
         
     }];
-        [dataTask resume];
+        [_dataTask resume];
         
 
     } else {
         NSLog(@"%@ at %@", @"Doing a configuration request", self.serverURLAndQuery);
         //get the config data and load it into the config data dictionary
-        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:self.request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        _dataTask = [self.session dataTaskWithRequest:self.request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             //parse json
             NSError *jsonError;
             if(!error) {
@@ -136,7 +155,7 @@ static TFSServerRequestType rt;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Config Data Received" object:self];
 
         }];
-        [dataTask resume];
+        [_dataTask resume];
     }
     
     

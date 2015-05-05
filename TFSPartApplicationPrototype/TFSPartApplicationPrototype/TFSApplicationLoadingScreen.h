@@ -10,4 +10,6 @@
 
 @interface TFSApplicationLoadingScreen : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
+
 @end

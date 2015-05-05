@@ -28,6 +28,9 @@
 		A0FBFF061ACAAF2C002D38A5 /* TFSPartDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFF041ACAAF2C002D38A5 /* TFSPartDetailsViewController.xib */; };
 		A0FBFF141ACAEDE5002D38A5 /* TFSSearchPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFF121ACAEDE5002D38A5 /* TFSSearchPageViewController.m */; };
 		A0FBFF151ACAEDE5002D38A5 /* TFSSearchPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0FBFF131ACAEDE5002D38A5 /* TFSSearchPageViewController.xib */; };
+		CED018E71AF60C0300897328 /* TFSGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED018E61AF60C0300897328 /* TFSGradientView.m */; };
+		CED018EA1AF6BAA400897328 /* TFSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CED018E91AF6BAA400897328 /* TFSButton.m */; };
+		CED018EC1AF88D4000897328 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED018EB1AF88D4000897328 /* QuartzCore.framework */; };
 		CEDB92511AED3D1100E84B85 /* TFSServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */; };
 		CEDB92541AED43D000E84B85 /* TFSConfigurationData.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDB92531AED43D000E84B85 /* TFSConfigurationData.m */; };
 		CEDB925D1AEF37C100E84B85 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDB925C1AEF37C100E84B85 /* MessageUI.framework */; };
@@ -78,6 +81,11 @@
 		A0FBFF111ACAEDE5002D38A5 /* TFSSearchPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSSearchPageViewController.h; sourceTree = "<group>"; };
 		A0FBFF121ACAEDE5002D38A5 /* TFSSearchPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSSearchPageViewController.m; sourceTree = "<group>"; };
 		A0FBFF131ACAEDE5002D38A5 /* TFSSearchPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TFSSearchPageViewController.xib; sourceTree = "<group>"; };
+		CED018E51AF60C0300897328 /* TFSGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSGradientView.h; sourceTree = "<group>"; };
+		CED018E61AF60C0300897328 /* TFSGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSGradientView.m; sourceTree = "<group>"; };
+		CED018E81AF6BAA300897328 /* TFSButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSButton.h; sourceTree = "<group>"; };
+		CED018E91AF6BAA400897328 /* TFSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSButton.m; sourceTree = "<group>"; };
+		CED018EB1AF88D4000897328 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CEDB924F1AED3D1100E84B85 /* TFSServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSServerRequest.h; sourceTree = "<group>"; };
 		CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFSServerRequest.m; sourceTree = "<group>"; };
 		CEDB92521AED43D000E84B85 /* TFSConfigurationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFSConfigurationData.h; sourceTree = "<group>"; };
@@ -94,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED018EC1AF88D4000897328 /* QuartzCore.framework in Frameworks */,
 				CEDB925D1AEF37C100E84B85 /* MessageUI.framework in Frameworks */,
 				A0106B751AC4AC4F00C7FDFC /* CoreGraphics.framework in Frameworks */,
 				A0106B771AC4AC4F00C7FDFC /* UIKit.framework in Frameworks */,
@@ -136,6 +145,7 @@
 		A0106B711AC4AC4F00C7FDFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CED018EB1AF88D4000897328 /* QuartzCore.framework */,
 				CEDB925C1AEF37C100E84B85 /* MessageUI.framework */,
 				A0106B721AC4AC4F00C7FDFC /* Foundation.framework */,
 				A0106B741AC4AC4F00C7FDFC /* CoreGraphics.framework */,
@@ -173,6 +183,10 @@
 				CEDB92501AED3D1100E84B85 /* TFSServerRequest.m */,
 				CEDB92521AED43D000E84B85 /* TFSConfigurationData.h */,
 				CEDB92531AED43D000E84B85 /* TFSConfigurationData.m */,
+				CED018E51AF60C0300897328 /* TFSGradientView.h */,
+				CED018E61AF60C0300897328 /* TFSGradientView.m */,
+				CED018E81AF6BAA300897328 /* TFSButton.h */,
+				CED018E91AF6BAA400897328 /* TFSButton.m */,
 			);
 			path = TFSPartApplicationPrototype;
 			sourceTree = "<group>";
@@ -313,11 +327,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0106B831AC4AC4F00C7FDFC /* TFSAppDelegate.m in Sources */,
+				CED018EA1AF6BAA400897328 /* TFSButton.m in Sources */,
 				A0FBFED81ACA7D7D002D38A5 /* TFSPart.m in Sources */,
 				CEDB92511AED3D1100E84B85 /* TFSServerRequest.m in Sources */,
 				A0FBFF051ACAAF2C002D38A5 /* TFSPartDetailsViewController.m in Sources */,
 				A0FBFEDE1ACA8BDF002D38A5 /* TFSPartStore.m in Sources */,
 				A0FBFEF91ACAAAEB002D38A5 /* TFSImageStore.m in Sources */,
+				CED018E71AF60C0300897328 /* TFSGradientView.m in Sources */,
 				CEDB92541AED43D000E84B85 /* TFSConfigurationData.m in Sources */,
 				A0106B7F1AC4AC4F00C7FDFC /* main.m in Sources */,
 				A0FBFF141ACAEDE5002D38A5 /* TFSSearchPageViewController.m in Sources */,

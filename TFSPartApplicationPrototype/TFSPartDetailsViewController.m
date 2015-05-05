@@ -9,6 +9,8 @@
 #import "TFSPartDetailsViewController.h"
 #import "TFSPart.h"
 #import "TFSImageStore.h"
+#import "TFSGradientView.h"
+#import "TFSButton.h"
 
 @interface TFSPartDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
@@ -19,6 +21,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endTypesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *manufacturersLabel;
+
+//like on the search page, retain a reference to this page's gradient view for the background
+@property (strong, nonatomic) TFSGradientView *backgroundGradient;
+//the part image
+@property (strong, nonatomic) UIImage *partImage;
 
 
 @end
@@ -36,7 +43,26 @@
         navItem.title = @"Part Details";
         
         //Create a new bar button item that will send viewImage: to this view controller
-        UIBarButtonItem *viewImageButton = [[UIBarButtonItem alloc] initWithTitle:@"View Image" style:UIBarButtonItemStylePlain target:self action:@selector(viewPartImage)];
+        //UIBarButtonItem *viewImageButton = [[UIBarButtonItem alloc] initWithTitle:@"View Image" style:UIBarButtonItemStylePlain target:self action:@selector(viewPartImage)];
+        //navItem.rightBarButtonItem = viewImageButton;
+        TFSButton *vib;
+        //set the view image button in the navbar
+        if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            NSLog(@"This device is an ipad.");
+            vib = [[TFSButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.5f , 39) withBackgroundColor:[UIColor redColor]];
+        } else {
+            vib = [[TFSButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.33f, 39) withBackgroundColor:[UIColor redColor]];
+        }
+            
+        vib.titleLabel.font = [UIFont fontWithName:@"System" size:30.0];
+        vib.titleLabel.adjustsFontSizeToFitWidth = YES;
+        vib.titleLabel.textAlignment = NSTextAlignmentCenter;
+        vib.titleLabel.textColor = [UIColor whiteColor];
+        [vib setTitle:@"View Image" forState:UIControlStateNormal];
+        [vib setTitle:@"View Image" forState:UIControlStateHighlighted];
+        [vib addTarget:self action:@selector(viewPartImage) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *viewImageButton = [[UIBarButtonItem alloc] initWithCustomView:vib];
         navItem.rightBarButtonItem = viewImageButton;
     }
     
@@ -54,6 +80,7 @@
     self.nameLabel.text = part.partName;
     self.groupLabel.text = part.partGroupType;
     self.typeLabel.text = part.partType;
+    self.partImage = [UIImage imageWithCGImage:[[TFSImageStore images] imageForKey:part.imageName].CGImage];
     
     NSMutableString *sizeString = [[NSMutableString alloc] init];
     //initialize the size label by appending size strings, if the number of strings in the array is greater than one
@@ -91,7 +118,7 @@
     if([part.partEndTypes count] > 1) {
         for(int i = 0; i < [part.partEndTypes count] - 1; i++) {
             if(![part.partEndTypes[i] isEqualToString:@"NA"] && ![part.partEndTypes[i+1] isEqualToString:@"NA"]) {
-                NSString *appendString = [NSString stringWithFormat:@"%@, ", part.partEndTypes[i]];
+                NSString *appendString = [NSString stringWithFormat:@"%@ & ", part.partEndTypes[i]];
                 [endTypeString appendString:appendString];
             } else if(![part.partEndTypes[i] isEqualToString:@"NA"] && [part.partEndTypes[i+1] isEqualToString:@"NA"]) {
                 NSString *appendString = [NSString stringWithFormat:@"%@", part.partEndTypes[i]];
@@ -136,40 +163,57 @@
 
     //self.manufacturersLabel.numberOfLines = numLines;
     self.manufacturersLabel.text = manufacturersString;
+    
+    if(!self.backgroundGradient) {
+        TFSGradientView *viewGradient = [[TFSGradientView alloc] initWithFrame:self.view.bounds];
+        viewGradient.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        //dark gray color
+        UIColor *firstColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.0f alpha:1.0f];
+        //lighter gray color
+        UIColor *secondColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.3f alpha:1.0f];
+        viewGradient.layer.colors = [NSArray arrayWithObjects:(id)[firstColor CGColor], (id)[secondColor CGColor], (id)[firstColor CGColor], nil];
+        self.backgroundGradient = viewGradient;
+        [self.view addSubview:self.backgroundGradient];
+        [self.view sendSubviewToBack:self.backgroundGradient];
+    }
+    
 }
 
 //When the user taps the View Image button, display the part's associated image in a modal viewController that contains
 //a UIImageView
 - (void)viewPartImage
 {
-    TFSImageStore *images = [TFSImageStore images];
     //create an view controller which will contain a UIImageView
     UIViewController *imageViewController = [[UIViewController alloc] init];
     
     imageViewController.view.backgroundColor = [UIColor blackColor];
     imageViewController.view.userInteractionEnabled = YES;
+    imageViewController.view.frame = self.view.bounds;
+    imageViewController.title = [NSString stringWithString:self.part.partNumber];
     
     //Dismissal button
+    /*
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     navBar.backgroundColor = [UIColor clearColor];
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     navItem.title = [NSString stringWithFormat:@"%@", self.part.partNumber];
-    
     UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithTitle:@"Return" style:UIBarButtonItemStyleDone target:self action:@selector(dismissImageView:)];
     navItem.rightBarButtonItem = dismissButton;
+
     
     navBar.items = @[navItem];
     [imageViewController.view addSubview:navBar];
+     */
     
     //Image view with a frame that has 90% the height and width of the imageViewController that contains it
     UIImageView *partImageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewController.view.frame.size.width * 0.05, imageViewController.view.frame.size.height * 0.05,imageViewController.view.frame.size.width * 0.9, imageViewController.view.frame.size.height * 0.9)];
     partImageView.contentMode = UIViewContentModeScaleAspectFit;
-    partImageView.image = [images imageForKey:self.part.imageName];
+    partImageView.image = self.partImage;
     
     [imageViewController.view addSubview:partImageView];
     
-    [self presentViewController:imageViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:imageViewController animated:YES];
     
 }
 

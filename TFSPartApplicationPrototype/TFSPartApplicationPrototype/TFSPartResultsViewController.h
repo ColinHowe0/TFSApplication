@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface TFSPartResultsViewController : UITableViewController <UITableViewDelegate, MFMailComposeViewControllerDelegate>
+@interface TFSPartResultsViewController : UITableViewController <UITableViewDelegate, MFMailComposeViewControllerDelegate, UISplitViewControllerDelegate>
 
 @property (nonatomic) NSInteger numParts;
 @property (nonatomic) NSString *emailRequestString;
@@ -19,6 +20,9 @@
 
 //method for generating the parts in the partStore (TEMPORARY, USED IN TESTING)
 - (void)generateParts:(NSInteger)numParts;
+
+//method for setting a detail view controller
+- (void)setDetailViewController:(id)dvc;
 
 
 

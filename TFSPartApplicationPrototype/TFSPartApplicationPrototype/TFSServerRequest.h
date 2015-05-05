@@ -22,4 +22,5 @@ typedef NS_ENUM(NSUInteger, TFSServerRequestType) {
 //send request and get data
 - (void)sendRequest;
 
+
 @end

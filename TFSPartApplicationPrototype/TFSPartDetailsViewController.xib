@@ -29,7 +29,7 @@
                         <constraint firstAttribute="height" constant="36" id="gSe-S1-mkc"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                    <color key="textColor" red="0.3174460891" green="0.68116761439999995" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.26381683349609375" green="0.6100003719329834" blue="0.99863433837890625" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Size:" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="d9K-rM-fXi">
@@ -282,7 +282,7 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="170" y="287"/>
+            <point key="canvasLocation" x="227" y="261"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

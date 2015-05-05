@@ -2,10 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TFSApplicationLoadingScreen">
             <connections>
+                <outlet property="loadingImage" destination="bR9-gg-3lt" id="a3f-m6-EoR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,30 +16,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOADING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9r-By-coN">
-                    <rect key="frame" x="8" y="416" width="304" height="48"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                    <color key="textColor" red="0.3174460891" green="0.68116761439999995" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Total Facility Solutions.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="bR9-gg-3lt">
+                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Total Facility Solutions.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="bR9-gg-3lt">
                     <rect key="frame" x="46" y="189" width="228" height="102"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="228" id="FYs-1m-I5C"/>
-                        <constraint firstAttribute="height" constant="102" id="NFr-wy-pn9"/>
+                        <constraint firstAttribute="height" constant="102" id="9zy-Qr-XvJ"/>
+                        <constraint firstAttribute="width" constant="228" id="B6O-Jw-wCe"/>
+                        <constraint firstAttribute="width" secondItem="bR9-gg-3lt" secondAttribute="height" multiplier="38:17" id="eIg-ba-SAx"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="bR9-gg-3lt" secondAttribute="centerX" id="0iU-NO-cgX"/>
-                <constraint firstItem="Z9r-By-coN" firstAttribute="top" secondItem="bR9-gg-3lt" secondAttribute="bottom" constant="125" id="0jR-YN-z8H"/>
-                <constraint firstAttribute="trailing" secondItem="Z9r-By-coN" secondAttribute="trailing" constant="8" id="Ek2-kL-xlk"/>
-                <constraint firstItem="Z9r-By-coN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Y2m-Uy-ooW"/>
-                <constraint firstAttribute="centerY" secondItem="bR9-gg-3lt" secondAttribute="centerY" id="h8O-ix-0DC"/>
-                <constraint firstAttribute="bottom" secondItem="Z9r-By-coN" secondAttribute="bottom" constant="16" id="zuN-ef-nDS"/>
+                <constraint firstAttribute="centerX" secondItem="bR9-gg-3lt" secondAttribute="centerX" id="vFl-GO-XiI"/>
+                <constraint firstAttribute="centerY" secondItem="bR9-gg-3lt" secondAttribute="centerY" id="zRb-1I-gSK"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="397" y="231"/>
