@@ -248,40 +248,39 @@ static BOOL buttonsSet = NO;
     self.selectionTermsPicker.delegate = self;
     self.selectionTermsPicker.backgroundColor = [UIColor whiteColor];
     self.selectionTermsPicker.showsSelectionIndicator = YES;
-    //[self.selectionTermsPicker addGestureRecognizer:self.pickerViewRecognizer];
-    
     
     //prepare selection Terms Picker's  gesture recognizer for its view
     selectedTextField = textField;
     
     
     if([textField isEqual:self.groupTypeTextField]) {
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"groupType"];
+        //reversed
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"groupType"] reverseObjectEnumerator] allObjects];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
         //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.partTypeTextField]) {
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"partType"];
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"partType"] reverseObjectEnumerator] allObjects];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
         //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.materialClassTextField]) {
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"materialClass"];
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"materialClass"] reverseObjectEnumerator] allObjects];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
         //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.sizeOneTextField] || [textField isEqual:self.sizeTwoTextField] || [textField isEqual:self.sizeThreeTextField]) {
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"size"];
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"size"] reverseObjectEnumerator] allObjects];
         //currentSelection = self.selectionTermsForPicker[0];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
     } else if([textField isEqual:self.endTypeOneTextField] || [textField isEqual:self.endTypeTwoTextField] || [textField isEqual:self.endTypeThreeTextField]){
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"endType"];
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"endType"] reverseObjectEnumerator] allObjects];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
         //currentSelection = self.selectionTermsForPicker[0];
     } else if([textField isEqual:self.manufacturerTextField]) {
-        self.selectionTermsForPicker = self.selectionTermsDictionary[@"manufacturer"];
+        self.selectionTermsForPicker = [[self.selectionTermsDictionary[@"manufacturer"] reverseObjectEnumerator] allObjects];
         textField.inputView = self.selectionTermsPicker;
         textField.inputAccessoryView = pickerDoneButtonView;
         //currentSelection = self.selectionTermsForPicker[0];
@@ -295,6 +294,11 @@ static BOOL buttonsSet = NO;
         self.selectionTermsPicker = nil;
         selectedTextField = nil;
         NSLog(@"Warning: Error for a selected textfield in textFieldShouldBeginEditing:");
+    }
+    
+    if(self.selectionTermsPicker) {
+        //put the selection for the picker at the bottom
+        [self.selectionTermsPicker selectRow:[self.selectionTermsForPicker count] - 1 inComponent:0 animated:NO];
     }
     
     
@@ -320,6 +324,14 @@ static BOOL buttonsSet = NO;
         [self.view removeGestureRecognizer:rec];
      */
 
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    textField.text = @"";
+    currentSelection = nil;
+    [textField resignFirstResponder];
+    return NO;
 }
 
 - (void)viewDidLoad
@@ -434,7 +446,7 @@ static BOOL buttonsSet = NO;
 {
     if([textField isEqual:self.generalSearchTextField]) {
         NSLog(@"User entered: %@", textField.text);
-        [textField resignFirstResponder];
+        [[self view] endEditing:YES];
         return YES;
     }
     
