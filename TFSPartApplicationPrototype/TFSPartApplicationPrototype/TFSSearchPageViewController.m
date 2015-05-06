@@ -249,10 +249,7 @@ static BOOL buttonsSet = NO;
     self.selectionTermsPicker.backgroundColor = [UIColor whiteColor];
     self.selectionTermsPicker.showsSelectionIndicator = YES;
     //[self.selectionTermsPicker addGestureRecognizer:self.pickerViewRecognizer];
-<<<<<<< HEAD:TFSPartApplicationPrototype/TFSPartApplicationPrototype/TFSSearchPageViewController.m
     
-=======
->>>>>>> c275b1fae8b2e4280193403aa36318f3ea49fb82:TFSPartApplicationPrototype/TFSPartApplicationPrototype/TFSPartApplicationPrototype/TFSSearchPageViewController.m
     
     //prepare selection Terms Picker's  gesture recognizer for its view
     selectedTextField = textField;
