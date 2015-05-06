@@ -141,6 +141,7 @@ static BOOL buttonsSet = NO;
     
     _generalSearchTextField.adjustsFontSizeToFitWidth = YES;
     _generalSearchTextField.minimumFontSize = 14;
+    _generalSearchTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
     _groupTypeLabel.lineBreakMode = NSLineBreakByClipping;
     _groupTypeLabel.numberOfLines = 1;
@@ -229,8 +230,7 @@ static BOOL buttonsSet = NO;
     UIToolbar *pickerDoneButtonView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     pickerDoneButtonView.barStyle = UIBarStyleBlackOpaque;
     //prepare the done button for that toolbar which will dismiss the picker upon pressing
-    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [doneButton setFrame:CGRectMake(0, 0, pickerDoneButtonView.frame.size.width/3.0, 33)];
+    TFSButton *doneButton = [[TFSButton alloc] initWithFrame:CGRectMake(0,0, pickerDoneButtonView.frame.size.width/3.0, 33)withBackgroundColor:[UIColor redColor]];
     [doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     doneButton.titleLabel.numberOfLines = 1;
@@ -244,11 +244,12 @@ static BOOL buttonsSet = NO;
     
     
     //prepare the selection terms picker
-    self.selectionTermsPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3.0)];
+    self.selectionTermsPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.selectionTermsPicker.delegate = self;
     self.selectionTermsPicker.backgroundColor = [UIColor whiteColor];
     self.selectionTermsPicker.showsSelectionIndicator = YES;
     //[self.selectionTermsPicker addGestureRecognizer:self.pickerViewRecognizer];
+    
     
     //prepare selection Terms Picker's  gesture recognizer for its view
     selectedTextField = textField;
@@ -296,6 +297,8 @@ static BOOL buttonsSet = NO;
         NSLog(@"Warning: Error for a selected textfield in textFieldShouldBeginEditing:");
     }
     
+    
+    
     return YES;
 }
 
@@ -339,7 +342,7 @@ static BOOL buttonsSet = NO;
     //set general search text field settings
     self.generalSearchTextField.returnKeyType = UIReturnKeyDone;
     self.generalSearchTextField.autocorrectionType = NO;
-    self.generalSearchTextField.enablesReturnKeyAutomatically = YES;
+    self.generalSearchTextField.enablesReturnKeyAutomatically = NO;
     self.generalSearchTextField.keyboardType = UIKeyboardTypeAlphabet;
     self.generalSearchTextField.secureTextEntry = NO;
     
@@ -431,7 +434,7 @@ static BOOL buttonsSet = NO;
 {
     if([textField isEqual:self.generalSearchTextField]) {
         NSLog(@"User entered: %@", textField.text);
-        [[self view] endEditing:YES];
+        [textField resignFirstResponder];
         return YES;
     }
     
@@ -517,7 +520,7 @@ static BOOL buttonsSet = NO;
     
     
     //get the search text string from the text fields. if there is not general search text field entered, then the string to show on the top of the results view will be "Custom Search"
-    self.searchRequestString = [[NSString alloc] initWithFormat:@"Search Results For: %@",self.generalSearchTextField.text.length > 0 ? self.generalSearchTextField.text : @"Custom Search"];
+    self.searchRequestString = [[NSString alloc] initWithFormat:@"Search Results Displayed For: %@",self.generalSearchTextField.text.length > 0 ? self.generalSearchTextField.text : @"Custom Search"];
     //create a part results view controller, and set its search text property
     self.searchResultsViewController = [[TFSPartResultsViewController alloc] init];
     //set the search results view controller's navigation item label (at the top of the screen) and the string that the view controller sends as an email (template)

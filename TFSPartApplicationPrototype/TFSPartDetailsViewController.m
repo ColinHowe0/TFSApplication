@@ -170,8 +170,8 @@
         //dark gray color
         UIColor *firstColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.0f alpha:1.0f];
         //lighter gray color
-        UIColor *secondColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.3f alpha:1.0f];
-        viewGradient.layer.colors = [NSArray arrayWithObjects:(id)[firstColor CGColor], (id)[secondColor CGColor], (id)[firstColor CGColor], nil];
+        UIColor *secondColor = [[UIColor alloc] initWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.4f alpha:1.0f];
+        viewGradient.layer.colors = [NSArray arrayWithObjects:(id)[firstColor CGColor], (id)[secondColor CGColor], (id)[secondColor CGColor], (id)[firstColor CGColor], nil];
         self.backgroundGradient = viewGradient;
         [self.view addSubview:self.backgroundGradient];
         [self.view sendSubviewToBack:self.backgroundGradient];

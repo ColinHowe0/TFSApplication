@@ -13,6 +13,7 @@
 #import "TFSImageStore.h"
 #import "TFSGradientView.h"
 #import "TFSApplicationLoadingScreen.h"
+#import "TFSButton.h"
 
 @interface TFSPartResultsViewController ()
 
@@ -21,6 +22,8 @@
 @end
 
 @implementation TFSPartResultsViewController
+
+static NSInteger previousCellSelected = -1;
 
 
 //Designated Initializer
@@ -69,8 +72,11 @@
     label.textColor = [UIColor blackColor];
     navItem.titleView = label;
     
-    UIButton *emailRequestButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    emailRequestButton.frame = CGRectMake(0, 0, 100, 32);
+    TFSButton *emailRequestButton;
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        emailRequestButton = [[TFSButton alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width * 0.15f, 39) withBackgroundColor:[UIColor redColor]];
+    else
+        emailRequestButton = [[TFSButton alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width * 0.25f, 39) withBackgroundColor:[UIColor redColor]];
     [emailRequestButton addTarget:self action:@selector(sendEmail) forControlEvents:UIControlEventTouchUpInside];
     [emailRequestButton setTitle:@"Request" forState:UIControlStateNormal];
     
@@ -225,29 +231,32 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TFSPartDetailsViewController *dvc = [[TFSPartDetailsViewController alloc] init];
+    if(indexPath.section != previousCellSelected) {
+        TFSPartDetailsViewController *dvc = [[TFSPartDetailsViewController alloc] init];
     
-    NSArray *parts = [[TFSPartStore parts] allParts];
-    TFSPart *selectedPart = parts[indexPath.section];
-    //temporary testing for thumbnails
-    if(selectedPart.partThumbnailImage) {
-        NSLog(@"Still has an image.");
-    }
-    //give the detail view controller a pointer to the part that was selected
-    dvc.part = selectedPart;
-    if(!selectedPart) {
-        NSLog(@"NULL");
-    }
+        NSArray *parts = [[TFSPartStore parts] allParts];
+        TFSPart *selectedPart = parts[indexPath.section];
+        //temporary testing for thumbnails
+        if(selectedPart.partThumbnailImage) {
+            NSLog(@"Still has an image.");
+        }
+        //give the detail view controller a pointer to the part that was selected
+        dvc.part = selectedPart;
+        if(!selectedPart) {
+            NSLog(@"NULL");
+        }
     
-    //if this device is an ipad, then set the detail view controller property, otherwise
-    //just push to the navigation controller the detail view controller
-    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        self.dvc = dvc;
-        UINavigationController *dvcNav = self.navigationController.splitViewController.viewControllers.lastObject;
-        [dvcNav setViewControllers:[NSArray arrayWithObject:self.dvc] animated:YES];
-    } else {
-        //push this detail view controller onto the top of the stack
-        [self.navigationController pushViewController:dvc animated:YES];
+        //if this device is an ipad, then set the detail view controller property, otherwise
+        //just push to the navigation controller the detail view controller
+        if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            self.dvc = dvc;
+            UINavigationController *dvcNav = self.navigationController.splitViewController.viewControllers.lastObject;
+            [dvcNav setViewControllers:[NSArray arrayWithObject:self.dvc] animated:YES];
+        } else {
+            //push this detail view controller onto the top of the stack
+            [self.navigationController pushViewController:dvc animated:YES];
+        }
+        previousCellSelected = indexPath.section;
     }
 }
 
@@ -270,8 +279,8 @@
     UIColor *unselectedSecondColor = [UIColor colorWithHue:(CGFloat)(240.0/360.0) saturation:0.1f brightness:0.9f alpha:0.3f];
     
     //colors for the selected cell background
-    UIColor *selectedFirstColor = [UIColor colorWithHue:(CGFloat)(240.0/360.0) saturation:1.0f brightness:0.5f alpha:0.3f];
-    UIColor *selectedSecondColor = [UIColor colorWithHue:(CGFloat)(240.0/360.0) saturation:1.0f brightness:1.0f alpha:0.3f];
+    UIColor *selectedFirstColor = [UIColor colorWithHue:(CGFloat)0 saturation:1.0f brightness:0.5f alpha:0.3f];
+    UIColor *selectedSecondColor = [UIColor colorWithHue:(CGFloat)0 saturation:1.0f brightness:1.0f alpha:0.3f];
     
     
     TFSGradientView *grad = [[TFSGradientView alloc] initWithFrame:cell.bounds];
